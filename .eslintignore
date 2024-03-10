@@ -1,0 +1,8 @@
+dist/
+public/
+node_modules/
+!src/**/*.ts
+!src/**/*.tsx
+**/*.d.ts
+**/*.js
+vite.config.ts

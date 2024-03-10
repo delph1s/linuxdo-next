@@ -1,0 +1,9 @@
+$appName: "linuxdo-next";
+$pluginContainer: #{$appName}-container;
+$functionButton: #{$appName}-function-button;
+
+:export {
+  appName: $appName;
+  pluginContainer: $pluginContainer;
+  functionButton: $functionButton;
+}
