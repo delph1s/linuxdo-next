@@ -1,12 +1,14 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import monkey, { cdn } from 'vite-plugin-monkey';
+import tsconfigPaths from 'vite-tsconfig-paths'
 import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     react(),
+    tsconfigPaths(),
     monkey({
       // userscript entry file path
       entry: 'src/index.tsx',
@@ -96,12 +98,6 @@ export default defineConfig({
       },
     }),
   ],
-  resolve: {
-    alias: {
-      // '@src': path.resolve(__dirname, './src/'),
-      '@assets': path.resolve(__dirname, './src/assets/'),
-    }
-  },
   build: {
     minify: false,
   },

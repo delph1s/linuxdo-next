@@ -1,9 +1,9 @@
-$appName: "linuxdo-next";
+$appName:         "linuxdo-next";
 $pluginContainer: #{$appName}-container;
-$functionButton: #{$appName}-function-button;
+$pandoraButton:   #{$appName}-pandora-button;
 
 :export {
-  appName: $appName;
+  appName:         $appName;
   pluginContainer: $pluginContainer;
-  functionButton: $functionButton;
+  pandoraButton:  $pandoraButton;
 }

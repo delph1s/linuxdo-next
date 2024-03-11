@@ -5,4 +5,4 @@ node_modules/
 !src/**/*.tsx
 **/*.d.ts
 **/*.js
-vite.config.ts
+**/*.config.ts
