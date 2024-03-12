@@ -1,39 +1,43 @@
-import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import { PandoraButtonPosition } from '@components/button/pandora-button/types';
+import { uiConfig } from '@config/ui';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import React, { useState } from 'react';
 
+import { StyledPandoraDrawer } from './styles';
+
 type PandoraDrawerProps = {
-  open?: boolean;
-  toggleOpen?: (newOpen: boolean) => void;
+  openDrawer?: boolean;
+  handleCloseDrawer?: () => void;
+  drawerPosition?: PandoraButtonPosition;
 };
 
-const drawerBleeding = 56;
+function PandoraDrawer(
+  {
+    openDrawer = false, handleCloseDrawer = undefined, drawerPosition = 'right', ...restProps
+  }: PandoraDrawerProps
+) {
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up('sm'));
 
-function PandoraDrawer({
-                         open = false, toggleOpen = undefined, ...restProps
-                       }: PandoraDrawerProps) {
-  const toggleDrawer = (newOpen: boolean) => () => {
-    if (toggleOpen) {
-      toggleOpen(newOpen);
-    }
-  };
-
-  // const container = window !== undefined ? () => window.document.body : undefined;
+  const drawerSize = matches ? uiConfig.pandoraDrawerMaxHeight : uiConfig.pandoraDrawerMinHeight;
+  const drawerVariant = drawerPosition === 'left' || drawerPosition === 'right' ? 'permanent' : 'persistent';
+  console.log(openDrawer);
 
   return (
-    <SwipeableDrawer
-      // container={container}
-      anchor="right"
-      open={open}
-      onClose={toggleDrawer(false)}
-      onOpen={toggleDrawer(true)}
-      swipeAreaWidth={drawerBleeding}
-      disableSwipeToOpen={false}
+    <StyledPandoraDrawer
+      anchor={drawerPosition}
+      variant={drawerVariant}
+      open={openDrawer}
+      onClose={() => handleCloseDrawer && handleCloseDrawer()}
       ModalProps={{
         keepMounted: true,
       }}
+      openPandora={openDrawer}
+      drawerPosition={drawerPosition}
     >
-      a
-    </SwipeableDrawer>
+      abcdefg
+    </StyledPandoraDrawer>
   );
 }
 

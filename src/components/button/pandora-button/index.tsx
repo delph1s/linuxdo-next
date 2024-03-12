@@ -1,12 +1,20 @@
+import { PandoraButtonPosition } from '@components/button/pandora-button/types';
 import Button, { ButtonProps } from '@mui/material/Button';
 import React from 'react';
 
+import { StyledPandoraButton } from './styles';
+
 type PandoraButtonProps = ButtonProps & {
-  changeMe?: 'changeMe';
+  openPandora?: boolean;
+  pandoraButtonPosition?: PandoraButtonPosition;
 };
 
-function PandoraButton({ changeMe = 'changeMe', ...restProps }: PandoraButtonProps) {
-  return <Button variant="contained" {...restProps}>打开插件</Button>;
+function PandoraButton({ openPandora = false, pandoraButtonPosition = 'right', ...restProps }: PandoraButtonProps) {
+  return (
+    <StyledPandoraButton variant="contained" openPandora={openPandora} buttonPosition={pandoraButtonPosition} {...restProps}>
+      {openPandora ? '关闭助手' : '打开助手'}
+    </StyledPandoraButton>
+  );
 }
 
 export default PandoraButton;

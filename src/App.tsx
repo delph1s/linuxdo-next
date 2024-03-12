@@ -5,20 +5,24 @@ import ThemeProvider from '@src/store/context/module/theme';
 import React, { useEffect, useState } from 'react';
 
 function App() {
-  const [open, setOpen] = React.useState(false);
+  const [openPandora, setOpenPandora] = React.useState(false);
 
   // useEffect(() => {
   // }, []);
 
-  const toggleOpen = (newOpen: boolean) => {
-    setOpen(true);
+  const toggleOpenPandora = ()  => {
+    setOpenPandora(prevState => !prevState);
+  };
+
+  const handleClosePandora = () => {
+    setOpenPandora(false);
   };
 
   return (
     <div className={styles.pandoraButton}>
       <ThemeProvider>
-        <PandoraButton onClick={() => toggleOpen(true)} />
-        <PandoraDrawer open={open} toggleOpen={toggleOpen} />
+        <PandoraButton openPandora={openPandora} onClick={() => toggleOpenPandora()} />
+        <PandoraDrawer openDrawer={openPandora} handleCloseDrawer={handleClosePandora} />
       </ThemeProvider>
     </div>
   );
