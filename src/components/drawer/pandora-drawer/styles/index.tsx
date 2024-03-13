@@ -19,6 +19,10 @@ export const StyledPandoraDrawer = styled(Drawer, {
     const drawerSize = matches ? uiConfig.pandoraDrawerMaxHeight : uiConfig.pandoraDrawerMinHeight;
     const drawerSizeGap = `${50 - parseInt(drawerSize.replace('%', ''), 10) / 2}%`
 
+    const baseStyle: CSSObject = {
+      borderRadius: '0.75rem',
+    };
+
     switch (drawerPosition) {
       case 'top':
         return {
@@ -31,6 +35,7 @@ export const StyledPandoraDrawer = styled(Drawer, {
       case 'right':
         return {
           [`& .${drawerClasses.paper}`]: {
+            ...baseStyle,
             width: 0,
             height: `${drawerSize}`,
             top: drawerSizeGap,

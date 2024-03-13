@@ -1,4 +1,4 @@
-const fetchPost = () => {
+export const fetchGetPost = () => {
   fetch("https://linux.do/posts/26642.json", {
     "headers": {
       "accept": "application/json, text/javascript, */*; q=0.01",

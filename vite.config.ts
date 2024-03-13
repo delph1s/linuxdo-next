@@ -19,7 +19,7 @@ export default defineConfig({
         author: 'delph1s',
         description: '一个呼吸顺畅的 linux.do 论坛',
         // homepage: '',
-        // homepageURL: '',
+        homepageURL: 'https://github.com/delph1s/linuxdo-next',
         // website: '',
         // source: '',
         // icon: '',
