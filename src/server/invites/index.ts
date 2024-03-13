@@ -78,7 +78,7 @@ export const fetchGetInvites: FetchGetInvitesType = (
 };
 
 type FetchUpdateInviteType = (
-  inviteID: string,
+  inviteID: number,
   csrfToken: string,
   maxRedemptionsAllowed?: number,
   expiresAt?: string,
