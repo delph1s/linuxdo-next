@@ -88,7 +88,7 @@ export const fetchUpdateInvite: FetchUpdateInviteType = (
   inviteID,
   csrfToken,
   maxRedemptionsAllowed = 10,
-  expiresAt = '2099-12-31+23%3A59%2B08%3A00',
+  expiresAt = '9999-12-31+23%3A59%2B08%3A00',
 ) => {
   return fetch(`${appConfig.domain}/invites/${inviteID}`, {
     headers: {
