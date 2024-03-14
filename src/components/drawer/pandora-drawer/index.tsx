@@ -6,7 +6,7 @@ import { Box } from '@mui/material';
 import Button from '@mui/material/Button';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { fetchGetInvites, fetchUpdateInvite } from '@src/server';
+import { fetchForumAbout, fetchGetInvites, fetchUpdateInvite } from '@src/server';
 import lodashClone from 'lodash/clone';
 import React, { useRef, useState } from 'react';
 
@@ -69,8 +69,23 @@ function PandoraDrawer({
         const invites = lodashClone(invitesData.invites);
         setIsFetching(true);
         forceStop.current = false;
-        await handleModifyInviteExpiredTime(invites.map(invite => invite.id), csrfToken);
+        await handleModifyInviteExpiredTime(
+          invites.map(invite => invite.id),
+          csrfToken,
+        );
       }
+    }
+  };
+
+  const handleGetForumAbout = async () => {
+    const csrfToken = getCsrfToken();
+    if (csrfToken) {
+      setIsFetching(true);
+      const aboutData = await fetchForumAbout(csrfToken).then(res => {
+        setIsFetching(false);
+        return res;
+      });
+      console.log(aboutData);
     }
   };
 
@@ -93,12 +108,15 @@ function PandoraDrawer({
         <Button
           variant="contained"
           disabled={!isFetching}
-          onClick={() =>
-            { forceStop.current = true; }
-          }
+          onClick={() => {
+            forceStop.current = true;
+          }}
         >
           停止修改邀请时限
         </Button>
+        <LoadingButton variant="contained" loading={isFetching} onClick={() => handleGetForumAbout()}>
+          获取 linux.do 论坛统计数据
+        </LoadingButton>
       </Box>
     </StyledPandoraDrawer>
   );

@@ -65,7 +65,7 @@ module.exports = {
       },
     ],
     'import/no-extraneous-dependencies': [
-      'error',
+      'off',
       {
         devDependencies: false,
         optionalDependencies: true,

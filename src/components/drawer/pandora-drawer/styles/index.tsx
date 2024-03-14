@@ -17,9 +17,10 @@ export const StyledPandoraDrawer = styled(Drawer, {
     const {breakpoints, transitions} = theme;
     const matches = useMediaQuery(breakpoints.up('sm'));
     const drawerSize = matches ? uiConfig.pandoraDrawerMaxHeight : uiConfig.pandoraDrawerMinHeight;
-    const drawerSizeGap = `${50 - parseInt(drawerSize.replace('%', ''), 10) / 2}%`
+    const drawerSizeGap = `${50 - parseInt(drawerSize.replace('%', ''), 10) / 2}%`;
 
     const baseStyle: CSSObject = {
+      borderWidth: 0,
       borderRadius: '0.75rem',
     };
 
@@ -36,16 +37,17 @@ export const StyledPandoraDrawer = styled(Drawer, {
         return {
           [`& .${drawerClasses.paper}`]: {
             ...baseStyle,
-            width: 0,
+            width: uiConfig.pandoraDrawerWidth,
             height: `${drawerSize}`,
             top: drawerSizeGap,
-            transition: transitions.create(['width'], {
+            transform: `translateX(${uiConfig.pandoraDrawerWidth})`,
+            transition: transitions.create(['transform'], {
               easing: transitions.easing.sharp,
               duration: transitions.duration.shorter,
             }),
             ...(openPandora && {
-              width: uiConfig.pandoraDrawerWidth,
-              transition: transitions.create(['width'], {
+              transform: `translateX(${0})`,
+              transition: transitions.create(['transform'], {
                 easing: transitions.easing.sharp,
                 duration: transitions.duration.enteringScreen,
               })

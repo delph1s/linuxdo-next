@@ -7,9 +7,6 @@ import React, { useEffect, useState } from 'react';
 function App() {
   const [openPandora, setOpenPandora] = React.useState(false);
 
-  // useEffect(() => {
-  // }, []);
-
   const toggleOpenPandora = ()  => {
     setOpenPandora(prevState => !prevState);
   };

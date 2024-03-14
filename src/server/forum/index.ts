@@ -1,22 +1,29 @@
 import { routes } from '@server/routes';
 
-type FetchUpdateUserBirthdayType = (username: string, csrfToken: string, dateString?: string) => Promise<any>;
+type UserInfo = {
+  id: number;
+  username: string;
+  name: string;
+  avatar_template: string;
+  title: string;
+  last_seen_at: string | null;
+}
 
-export const fetchUpdateUserBirthday: FetchUpdateUserBirthdayType = (username, csrfToken, dateString) => {
-  return fetch(routes.user.userProfile(username), {
+type FetchForumAboutType = (csrfToken: string) => Promise<any>;
+
+export const fetchForumAbout: FetchForumAboutType = csrfToken => {
+  return fetch(routes.about, {
     headers: {
-      accept: '*/*',
+      accept: 'application/json, text/javascript, */*; q=0.01',
       'accept-language': 'zh-CN,zh;q=0.9,en;q=0.8',
-      'cache-control': 'no-cache',
-      'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
       'discourse-logged-in': 'true',
       'discourse-present': 'true',
-      pragma: 'no-cache',
+      'discourse-track-view': 'true',
       'x-csrf-token': csrfToken,
       'x-requested-with': 'XMLHttpRequest',
     },
-    body: `date_of_birth=${dateString}`,
-    method: 'PUT',
+    body: null,
+    method: 'GET',
     mode: 'cors',
     credentials: 'include',
   })

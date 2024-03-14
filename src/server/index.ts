@@ -1,3 +1,4 @@
+export * from './forum';
 export * from './invites';
 export * from './posts';
 export * from './routes';
