@@ -37,4 +37,5 @@ function PandoraButton({ openPandora = false, pandoraButtonPosition = 'right', .
   );
 }
 
+export type * from './types';
 export default PandoraButton;

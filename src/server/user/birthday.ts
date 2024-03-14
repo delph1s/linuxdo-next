@@ -1,6 +1,6 @@
 import { routes } from '@server/routes';
 
-export const fetchGetUserSummary = (username: string, csrfToken: string) => {
+export const fetchUpdateUserBirthday = (username: string, csrfToken: string) => {
   return fetch(routes.user.summary(username), {
     "headers": {
       "accept": "application/json, text/javascript, */*; q=0.01",

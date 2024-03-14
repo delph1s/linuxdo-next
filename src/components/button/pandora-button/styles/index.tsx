@@ -49,7 +49,7 @@ export const StyledPandoraButton = styled(Button, {
             duration: transitions.duration.shorter,
           }),
           ...(buttonVisible && {
-            transform: 'translateX(28%) rotate(-90deg)',
+            transform: 'translateX(29%) rotate(-90deg)',
             transition: transitions.create(['right', 'transform'], {
               easing: transitions.easing.sharp,
               duration: transitions.duration.enteringScreen,
@@ -57,7 +57,7 @@ export const StyledPandoraButton = styled(Button, {
           }),
           ...(openPandora && {
             right: uiConfig.pandoraDrawerWidth,
-            transform: 'translateX(28%) rotate(-90deg)',
+            transform: 'translateX(29%) rotate(-90deg)',
             transition: transitions.create(['right', 'transform'], {
               easing: transitions.easing.sharp,
               duration: transitions.duration.enteringScreen,

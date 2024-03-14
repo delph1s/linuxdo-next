@@ -1,8 +1,8 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import monkey, { cdn } from 'vite-plugin-monkey';
-import tsconfigPaths from 'vite-tsconfig-paths'
-import path from "path";
+import tsconfigPaths from 'vite-tsconfig-paths';
+// import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -10,8 +10,7 @@ export default defineConfig({
     react(),
     tsconfigPaths(),
     monkey({
-      // userscript entry file path
-      entry: 'src/index.tsx',
+      entry: 'src/index.tsx', // userscript entry file path
       userscript: {
         // name: 'linuxdo-next',
         namespace: 'linuxdo-next',
@@ -31,10 +30,7 @@ export default defineConfig({
         // downloadURL: '',
         // supportURL: '',
         // include: [],
-        match: [
-          '*://linux.do/',
-          '*://linux.do/*',
-        ],
+        match: ['*://linux.do/', '*://linux.do/*'],
         // 'exclude-match': [],
         // exclude: [],
         // require: [],
@@ -82,10 +78,7 @@ export default defineConfig({
         metaFileName: true,
         externalGlobals: {
           react: cdn.jsdelivr('React', 'umd/react.production.min.js'),
-          'react-dom': cdn.jsdelivr(
-            'ReactDOM',
-            'umd/react-dom.production.min.js',
-          ),
+          'react-dom': cdn.jsdelivr('ReactDOM', 'umd/react-dom.production.min.js'),
         },
         autoGrant: true,
         // externalResource: {},
@@ -99,6 +92,6 @@ export default defineConfig({
     }),
   ],
   build: {
-    minify: false,
+    minify: false, // greasyfork 要求可读代码
   },
 });

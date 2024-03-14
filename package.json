@@ -13,6 +13,7 @@
     "@emotion/styled": "11.11.0",
     "@mui/lab": "5.0.0-alpha.168",
     "@mui/material": "5.15.12",
+    "dayjs": "1.11.10",
     "lodash": "4.17.21",
     "react": "18.2.0",
     "react-dom": "18.2.0"
@@ -41,6 +42,6 @@
     "typescript": "5.4.2",
     "vite": "5.1.5",
     "vite-plugin-monkey": "3.5.1",
-    "vite-tsconfig-paths": "^4.3.1"
+    "vite-tsconfig-paths": "4.3.1"
   }
 }

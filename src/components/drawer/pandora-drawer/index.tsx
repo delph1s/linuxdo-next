@@ -9,7 +9,6 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { fetchGetInvites, fetchUpdateInvite } from '@src/server';
 import lodashClone from 'lodash/clone';
 import React, { useRef, useState } from 'react';
-import { flushSync } from 'react-dom';
 
 import { StyledPandoraDrawer } from './styles';
 
