@@ -1,3 +1,5 @@
+import { PaletteAugmentColorOptions, PaletteColor, PaletteTonalOffset, TypeAction, TypeBackground, TypeDivider } from '@mui/material/styles/createPalette';
+
 export type ThemeMode = 'light' | 'dark';
 
 export type BordersType = {
@@ -87,33 +89,23 @@ type ColorBadgesType = {
   text: string;
 };
 
-export type ColorCollection = {
-  background: {
-    default: string;
-    sidenav?: string;
-    card?: string;
-  };
-  text: ColorType & {
-    primary?: string;
-    secondary?: string;
-    disabled?: string;
-  };
-  transparent: Omit<ColorType, 'focus'>;
+export type PaletteType = {
+  // common: { white: string; black: string };
   white: ColorType;
   black: {
     light: string;
   } & ColorType;
-  grey: ColorStep;
-  monochrome: {
-    primary: ColorType;
-    secondary: ColorType;
-    info: ColorType;
-    success: ColorType;
-    warning: ColorType;
-    error: ColorType;
-    light: ColorType;
-    dark: ColorType;
-  };
+  mode: ThemeMode;
+  // contrastThreshold: number;
+  // tonalOffset: PaletteTonalOffset;
+  primary: ColorType;
+  secondary: ColorType;
+  error: ColorType;
+  warning: ColorType;
+  info: ColorType;
+  success: ColorType;
+  light: ColorType;
+  dark: ColorType;
   gradients: {
     primary: ColorGradientsType;
     secondary: ColorGradientsType;
@@ -137,6 +129,23 @@ export type ColorCollection = {
   coloredShadows: {
     [key: string]: string;
   };
+  grey: ColorStep;
+  text: ColorType & {
+    primary?: string;
+    secondary?: string;
+    disabled?: string;
+  };
+  // divider: TypeDivider;
+  // action: TypeAction;
+  background: {
+    default: string;
+    sidenav?: string;
+    card?: string;
+  };
+  // getContrastText: (background: string) => string;
+  // augmentColor: (options: PaletteAugmentColorOptions) => PaletteColor;
+
+  transparent: Omit<ColorType, 'focus'>;
   inputBorderColor: string;
   tabs: {
     indicator: {

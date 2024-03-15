@@ -1,6 +1,6 @@
 import { pxToRem } from '@assets/theme/functions/pxToRem';
-import { colors } from '@assets/theme/vars/colors';
-import { ColorCollection, ThemeMode, TypographyType } from '@assets/theme/vars/types';
+import { palette } from '@assets/theme/vars/colors';
+import { PaletteType, ThemeMode, TypographyType } from '@assets/theme/vars/types';
 
 type BasePropertiesType = {
   fontFamily: string;
@@ -19,11 +19,24 @@ type BasePropertiesType = {
   fontSize3XL: string;
 };
 
+const baseFontFamily = [
+  '-apple-system',
+  'BlinkMacSystemFont',
+  'Helvetica Neue',
+  'Helvetica',
+  'Arial',
+  'PingFang SC',
+  'Hiragino Sans GB',
+  'Microsoft YaHei',
+  'sans-serif',
+];
+
+const baseMobileFontFamily = ['PingFang SC', 'HarmonyOS_Regular', 'Helvetica Neue', 'Microsoft YaHei', 'sans-serif'];
+
 const baseProperties: BasePropertiesType = {
-  // fontFamily: '"PingFang SC", "Roboto", "Helvetica", "Arial", sans-serif',
-  fontFamily: '',
-  fontWeightLighter: 100,
-  fontWeightLight: 300,
+  fontFamily: baseFontFamily.join(','),
+  fontWeightLighter: 250,
+  fontWeightLight: 350,
   fontWeightRegular: 400,
   fontWeightMedium: 600,
   fontWeightBold: 700,
@@ -37,22 +50,22 @@ const baseProperties: BasePropertiesType = {
   fontSize3XL: pxToRem(30),
 };
 
-const genBaseHeadingProperties = (isLight: boolean, themeColors: ColorCollection) => {
-  const { white, monochrome } = themeColors;
+const genBaseHeadingProperties = (isLight: boolean, themeColors: PaletteType) => {
+  const { white, dark } = themeColors;
 
   return {
     fontFamily: baseProperties.fontFamily,
-    color: isLight ? monochrome.dark.main : white.main,
+    color: isLight ? dark.main : white.main,
     fontWeight: baseProperties.fontWeightBold,
   };
 };
 
-const genBaseDisplayProperties = (isLight: boolean, themeColors: ColorCollection) => {
-  const { white, monochrome } = themeColors;
+const genBaseDisplayProperties = (isLight: boolean, themeColors: PaletteType) => {
+  const { white, dark } = themeColors;
 
   return {
     fontFamily: baseProperties.fontFamily,
-    color: isLight ? monochrome.dark.main : white.main,
+    color: isLight ? dark.main : white.main,
     fontWeight: baseProperties.fontWeightLight,
     lineHeight: 1.2,
   };
@@ -60,7 +73,7 @@ const genBaseDisplayProperties = (isLight: boolean, themeColors: ColorCollection
 
 export const typography = (themeMode: ThemeMode): TypographyType => {
   const isLight = themeMode === 'light';
-  const themeColors = colors(themeMode);
+  const themeColors = palette(themeMode);
   const baseHeadingProperties = genBaseHeadingProperties(isLight, themeColors);
   const baseDisplayProperties = genBaseDisplayProperties(isLight, themeColors);
 

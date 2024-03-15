@@ -1,10 +1,10 @@
 import { boxShadow } from '@assets/theme/functions/boxShadow';
-import { colors } from '@assets/theme/vars/colors';
+import { palette } from '@assets/theme/vars/colors';
 import { BoxShadowsType, ThemeMode } from '@assets/theme/vars/types';
 
 export const boxShadows = (themeMode: ThemeMode): BoxShadowsType => {
   const isLight = themeMode === 'light';
-  const { white, black, monochrome, coloredShadows, tabs } = colors(themeMode);
+  const { white, black, dark, coloredShadows, tabs } = palette(themeMode);
 
   return {
     xs: boxShadow([0, 2], [9, -5], black.main, 0.15),
@@ -61,7 +61,7 @@ export const boxShadows = (themeMode: ThemeMode): BoxShadowsType => {
       )}`,
       dark: `${boxShadow([0, 4], [20, 0], black.main, 0.14)}, ${boxShadow([0, 7], [10, -5], coloredShadows.dark, 0.4)}`,
     },
-    navbarBoxShadow: `${boxShadow([0, 0], [1, 1], isLight ? white.main : monochrome.dark.main, 0.9, 'inset')}, ${boxShadow(
+    navbarBoxShadow: `${boxShadow([0, 0], [1, 1], isLight ? white.main : dark.main, 0.9, 'inset')}, ${boxShadow(
       [0, 20],
       [27, 0],
       black.main,

@@ -20,8 +20,7 @@ export const StyledPandoraDrawer = styled(Drawer, {
     const drawerSizeGap = `${50 - parseInt(drawerSize.replace('%', ''), 10) / 2}%`;
 
     const baseStyle: CSSObject = {
-      borderWidth: 0,
-      borderRadius: '0.75rem',
+      margin: 0,
     };
 
     switch (drawerPosition) {

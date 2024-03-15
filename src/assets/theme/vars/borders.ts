@@ -1,11 +1,11 @@
 import { pxToRem } from '@assets/theme/functions/pxToRem';
 import { rgba } from '@assets/theme/functions/rgba';
-import { colors } from '@assets/theme/vars/colors';
+import { palette } from '@assets/theme/vars/colors';
 import { BordersType, ThemeMode } from '@assets/theme/vars/types';
 
 export const borders = (themeMode: ThemeMode): BordersType => {
   const isLight = themeMode === 'light';
-  const { white, grey } = colors(themeMode);
+  const { white, grey } = palette(themeMode);
 
   return {
     borderColor: isLight ? grey[300] : rgba(white.main, 0.4),

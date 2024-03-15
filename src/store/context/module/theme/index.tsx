@@ -7,7 +7,7 @@ import { rgba } from '@assets/theme/functions/rgba';
 import { borders } from '@assets/theme/vars/borders';
 import { boxShadows } from '@assets/theme/vars/boxShadows';
 import { breakpoints } from '@assets/theme/vars/breakpoints';
-import { colors } from '@assets/theme/vars/colors';
+import { palette } from '@assets/theme/vars/colors';
 import type { ThemeMode } from '@assets/theme/vars/types';
 import { typography } from '@assets/theme/vars/typography';
 import type { ThemeOptions } from '@mui/material/styles';
@@ -22,7 +22,7 @@ import React, { ReactNode, useMemo } from 'react';
  */
 export const changeThemeMode = (mode: ThemeMode) => {
   return {
-    palette: colors(mode),
+    palette: palette(mode),
     typography: typography(mode),
     boxShadows: boxShadows(mode),
     borders: borders(mode),
@@ -41,7 +41,7 @@ function ThemeProvider({ children, ...restProps }: ThemeProviderProps) {
   const baseOption: ThemeOptions = useMemo(() => {
     return {
       breakpoints: { ...breakpoints },
-      palette: colors('light'),
+      palette: palette('light'),
       typography: typography('light'),
       boxShadows: boxShadows('light'),
       borders: borders('light'),

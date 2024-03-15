@@ -1,30 +1,13 @@
-import { ColorCollection, ThemeMode } from '@assets/theme/vars/types';
+import { PaletteType, ThemeMode } from '@assets/theme/vars/types';
 
-export const colors = (themeMode: ThemeMode): ColorCollection => {
+export const palette = (themeMode: ThemeMode): PaletteType => {
   const isLight = themeMode === 'light';
 
   return {
-    background: isLight
-      ? {
-          default: '#F0F2F5',
-        }
-      : {
-          default: '#1A2035',
-          sidenav: '#1F283E',
-          card: '#202940',
-        },
-    text: isLight
-      ? {
-          main: '#7B809A',
-          focus: '#7B809A',
-        }
-      : {
-          main: '#FFFFFFCC',
-          focus: '#FFFFFFCC',
-        },
-    transparent: {
-      main: 'transparent',
-    },
+    // common: {
+    //   black: '#000000',
+    //   white: '#FFFFFF',
+    // },
     white: {
       main: '#FFFFFF',
       focus: '#FFFFFF',
@@ -34,56 +17,45 @@ export const colors = (themeMode: ThemeMode): ColorCollection => {
       main: '#000000',
       focus: '#000000',
     },
-    grey: {
-      0: '#FFFFFF',
-      100: '#F8F9FA',
-      200: '#F0F2F5',
-      300: '#DEE2E6',
-      400: '#CED4DA',
-      500: '#ADB5BD',
-      600: '#6C757D',
-      700: '#495057',
-      800: '#343A40',
-      900: '#212529',
+    mode: themeMode,
+    // contrastThreshold: number;
+    // tonalOffset: PaletteTonalOffset;
+    primary: {
+      main: '#E91E63',
+      focus: '#E91E63',
     },
-    monochrome: {
-      primary: {
-        main: '#E91E63',
-        focus: '#E91E63',
+    secondary: {
+      main: '#7B809A',
+      focus: '#8F93A9',
+    },
+    error: {
+      main: '#F44335',
+      focus: '#F65F53',
+    },
+    warning: {
+      main: '#FB8C00',
+      focus: '#FC9D26',
+    },
+    info: {
+      main: '#1A73E8',
+      focus: '#1662C4',
+    },
+    success: {
+      main: '#4CAF50',
+      focus: '#67BB6A',
+    },
+    light: isLight
+      ? {
+        main: '#F0F2F5',
+        focus: '#F0F2F5',
+      }
+      : {
+        main: '#F0F2F566',
+        focus: '#F0F2F566',
       },
-      secondary: {
-        main: '#7B809A',
-        focus: '#8F93A9',
-      },
-      info: {
-        main: '#1A73E8',
-        focus: '#1662C4',
-      },
-      success: {
-        main: '#4CAF50',
-        focus: '#67BB6A',
-      },
-      warning: {
-        main: '#FB8C00',
-        focus: '#FC9D26',
-      },
-      error: {
-        main: '#F44335',
-        focus: '#F65F53',
-      },
-      light: isLight
-        ? {
-            main: '#F0F2F5',
-            focus: '#F0F2F5',
-          }
-        : {
-            main: '#F0F2F566',
-            focus: '#F0F2F566',
-          },
-      dark: {
-        main: '#344767',
-        focus: '#2C3C58',
-      },
+    dark: {
+      main: '#344767',
+      focus: '#2C3C58',
     },
     gradients: {
       primary: {
@@ -116,13 +88,13 @@ export const colors = (themeMode: ThemeMode): ColorCollection => {
       },
       dark: isLight
         ? {
-            main: '#42424A',
-            state: '#191919',
-          }
+          main: '#42424A',
+          state: '#191919',
+        }
         : {
-            main: '#323A54',
-            state: '#1A2035',
-          },
+          main: '#323A54',
+          state: '#1A2035',
+        },
     },
     badgeColors: {
       primary: {
@@ -167,6 +139,44 @@ export const colors = (themeMode: ThemeMode): ColorCollection => {
       error: '#F44336',
       light: '#ADB5BD',
       dark: '#404040',
+    },
+    grey: {
+      0: '#FFFFFF',
+      100: '#F8F9FA',
+      200: '#F0F2F5',
+      300: '#DEE2E6',
+      400: '#CED4DA',
+      500: '#ADB5BD',
+      600: '#6C757D',
+      700: '#495057',
+      800: '#343A40',
+      900: '#212529',
+    },
+    text: isLight
+      ? {
+        main: '#7B809A',
+        focus: '#7B809A',
+      }
+      : {
+        main: '#FFFFFFCC',
+        focus: '#FFFFFFCC',
+      },
+    // divider: TypeDivider;
+    // action: TypeAction;
+    background: isLight
+      ? {
+          default: '#F0F2F5',
+        }
+      : {
+          default: '#1A2035',
+          sidenav: '#1F283E',
+          card: '#202940',
+        },
+    // getContrastText: (background: string) => string;
+    // augmentColor: (options: PaletteAugmentColorOptions) => PaletteColor;
+
+    transparent: {
+      main: 'transparent',
     },
     inputBorderColor: '#D2D6DA',
     tabs: {

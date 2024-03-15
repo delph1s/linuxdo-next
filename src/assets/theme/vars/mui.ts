@@ -5,4 +5,4 @@ import '@mui/x-tree-view/themeAugmentation';
 
 import { Theme, ThemeOptions } from '@mui/material/styles';
 
-export type MuiThemeOptionsComponents<MuiTheme = Omit<Theme, 'components'>> = Required<ThemeOptions>['components'];
+export type MuiThemeOptionsComponents<MuiTheme = Omit<Theme, 'components'>> = Required<Theme>['components'];

@@ -25,6 +25,7 @@ function PandoraButton({ openPandora = false, pandoraButtonPosition = 'right', .
   return (
     <StyledPandoraButton
       variant="contained"
+      color="success"
       openPandora={openPandora}
       buttonPosition={pandoraButtonPosition}
       buttonVisible={visible}

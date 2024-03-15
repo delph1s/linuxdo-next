@@ -13,3 +13,5 @@ export const boxShadow = (
 
   return `${inset} ${pxToRem(x)} ${pxToRem(y)} ${pxToRem(blur)} ${pxToRem(spread)} ${rgba(color, opacity)}`;
 };
+
+export type BoxShadowFunction = typeof boxShadow;

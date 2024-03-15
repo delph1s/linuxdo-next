@@ -11,3 +11,5 @@ export const gradientChartLine = (chart: any, color: string, opacity: number = 0
 
   return gradientStroke;
 };
+
+export type GradientChartLineFunction = typeof gradientChartLine;
