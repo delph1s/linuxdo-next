@@ -8,8 +8,10 @@ import { borders } from '@assets/theme/vars/borders';
 import { boxShadows } from '@assets/theme/vars/boxShadows';
 import { breakpoints } from '@assets/theme/vars/breakpoints';
 import { palette } from '@assets/theme/vars/colors';
+import { GlobalStyles } from '@assets/theme/vars/globals';
 import type { ThemeMode } from '@assets/theme/vars/types';
 import { typography } from '@assets/theme/vars/typography';
+// import CssBaseline from '@mui/material/CssBaseline';
 import type { ThemeOptions } from '@mui/material/styles';
 import { createTheme, ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
 import lodashMerge from 'lodash/merge';
@@ -75,6 +77,7 @@ function ThemeProvider({ children, ...restProps }: ThemeProviderProps) {
   return (
     <MuiThemeProvider theme={theme}>
       {/* <CssBaseline /> */}
+      <GlobalStyles />
       {children}
     </MuiThemeProvider>
   );

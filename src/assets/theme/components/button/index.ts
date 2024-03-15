@@ -180,10 +180,10 @@ export const button = (
           },
         },
         outlined: {
-          minHeight: pxToRem(40),
+          minHeight: pxToRem(isLight ? 40 : 39),
           color: light.main,
           borderColor: light.main,
-          padding: `${pxToRem(10)} ${pxToRem(24)}`,
+          padding: `${pxToRem(isLight ? 10 : 9)} ${pxToRem(24)}`,
 
           '&:hover': {
             opacity: 0.75,
@@ -195,15 +195,73 @@ export const button = (
           },
 
           //   [`&.${buttonClasses.outlined}.${buttonClasses.colorInherit}`]: {},
-          //   [`&.${buttonClasses.outlined}.${buttonClasses.colorPrimary}`]: {},
-          //   [`&.${buttonClasses.outlined}.${buttonClasses.colorSecondary}`]: {},
-          //   [`&.${buttonClasses.outlined}.${buttonClasses.colorSuccess}`]: {},
-          //   [`&.${buttonClasses.outlined}.${buttonClasses.colorError}`]: {},
-          //   [`&.${buttonClasses.outlined}.${buttonClasses.colorInfo}`]: {},
-          //   [`&.${buttonClasses.outlined}.${buttonClasses.colorWarning}`]: {},
-          //   [`&.${buttonClasses.outlined}.${buttonClasses.sizeSmall}`]: {},
+          [`&.${buttonClasses.outlined}.${buttonClasses.colorPrimary}`]: {
+            backgroundColor: transparent.main,
+            borderColor: info.main,
+
+            '&:hover': {
+              backgroundColor: transparent.main,
+            },
+          },
+          [`&.${buttonClasses.outlined}.${buttonClasses.colorSecondary}`]: {
+            backgroundColor: transparent.main,
+            borderColor: secondary.main,
+
+            '&:hover': {
+              backgroundColor: transparent.main,
+            },
+          },
+          [`&.${buttonClasses.outlined}.${buttonClasses.colorError}`]: {
+            backgroundColor: transparent.main,
+            borderColor: error.main,
+
+            '&:hover': {
+              backgroundColor: transparent.main,
+            },
+          },
+          [`&.${buttonClasses.outlined}.${buttonClasses.colorWarning}`]: {
+            backgroundColor: transparent.main,
+            borderColor: warning.main,
+
+            '&:hover': {
+              backgroundColor: transparent.main,
+            },
+          },
+          [`&.${buttonClasses.outlined}.${buttonClasses.colorSuccess}`]: {
+            backgroundColor: transparent.main,
+            borderColor: success.main,
+
+            '&:hover': {
+              backgroundColor: transparent.main,
+            },
+          },
+          [`&.${buttonClasses.outlined}.${buttonClasses.colorInfo}`]: {
+            backgroundColor: transparent.main,
+            borderColor: info.main,
+
+            '&:hover': {
+              backgroundColor: transparent.main,
+            },
+          },
+          [`&.${buttonClasses.outlined}.${buttonClasses.sizeSmall}`]: {
+            minHeight: pxToRem(isLight ? 32 : 31),
+            padding: `${pxToRem(6)} ${pxToRem(isLight ? 16 : 18)}`,
+            fontSize: size.xs,
+
+            '& .material-icon, .material-icons-round, svg': {
+              fontSize: `${pxToRem(12)} !important`,
+            },
+          },
           //   [`&.${buttonClasses.outlined}.${buttonClasses.sizeMedium}`]: {},
-          //   [`&.${buttonClasses.outlined}.${buttonClasses.sizeLarge}`]: {},
+          [`&.${buttonClasses.outlined}.${buttonClasses.sizeLarge}`]: {
+            minHeight: pxToRem(isLight ? 47 : 46),
+            padding: `${pxToRem(12)} ${pxToRem(isLight ? 28 : 24)}`,
+            fontSize: size.sm,
+
+            '& .material-icon, .material-icons-round, svg': {
+              fontSize: `${pxToRem(22)} !important`,
+            },
+          },
         },
         contained: {
           backgroundColor: white.main,

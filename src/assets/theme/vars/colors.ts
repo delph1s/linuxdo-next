@@ -1,4 +1,5 @@
 import { PaletteType, ThemeMode } from '@assets/theme/vars/types';
+import { Theme } from '@mui/material/styles';
 
 export const palette = (themeMode: ThemeMode): PaletteType => {
   const isLight = themeMode === 'light';
@@ -46,13 +47,13 @@ export const palette = (themeMode: ThemeMode): PaletteType => {
     },
     light: isLight
       ? {
-        main: '#F0F2F5',
-        focus: '#F0F2F5',
-      }
+          main: '#F0F2F5',
+          focus: '#F0F2F5',
+        }
       : {
-        main: '#F0F2F566',
-        focus: '#F0F2F566',
-      },
+          main: '#F0F2F566',
+          focus: '#F0F2F566',
+        },
     dark: {
       main: '#344767',
       focus: '#2C3C58',
@@ -88,13 +89,13 @@ export const palette = (themeMode: ThemeMode): PaletteType => {
       },
       dark: isLight
         ? {
-          main: '#42424A',
-          state: '#191919',
-        }
+            main: '#42424A',
+            state: '#191919',
+          }
         : {
-          main: '#323A54',
-          state: '#1A2035',
-        },
+            main: '#323A54',
+            state: '#1A2035',
+          },
     },
     badgeColors: {
       primary: {
@@ -154,13 +155,13 @@ export const palette = (themeMode: ThemeMode): PaletteType => {
     },
     text: isLight
       ? {
-        main: '#7B809A',
-        focus: '#7B809A',
-      }
+          main: '#7B809A',
+          focus: '#7B809A',
+        }
       : {
-        main: '#FFFFFFCC',
-        focus: '#FFFFFFCC',
-      },
+          main: '#FFFFFFCC',
+          focus: '#FFFFFFCC',
+        },
     // divider: TypeDivider;
     // action: TypeAction;
     background: isLight

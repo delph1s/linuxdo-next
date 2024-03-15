@@ -154,6 +154,13 @@ export type PaletteType = {
   };
 };
 
+export const CoreColors = ['primary', 'secondary', 'info', 'success', 'warning', 'error'] as const;
+export const ThemeColors = ['primary', 'secondary', 'info', 'success', 'warning', 'error', 'light', 'dark'] as const;
+export const PromptColors = ['info', 'success', 'warning', 'error'] as const;
+export type ColorSchema = (typeof CoreColors)[number];
+export type ThemeColorSchema = (typeof ThemeColors)[number];
+export type PromptColorSchema = (typeof PromptColors)[number];
+
 type TypographyDisplayType = {
   fontFamily: string;
   color: string;

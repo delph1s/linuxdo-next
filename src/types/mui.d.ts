@@ -8,12 +8,11 @@ import {
 import { BordersType, BoxShadowsType, PaletteType, TypographyType } from '@assets/theme/vars/types';
 
 // Button
-// declare module '@mui/material/Button' {
-//   interface ButtonPropsVariantOverrides {
-//     text: true;
-//     disabled: true;
-//   }
-// }
+declare module '@mui/material/Button' {
+  interface ButtonPropsVariantOverrides {
+    gradient: true;
+  }
+}
 
 type ThemeFunctions = {
   boxShadow: BoxShadowFunction;

@@ -64,6 +64,9 @@ module.exports = {
         exceptions: ['Image', 'img'],
       },
     ],
+    'react-hooks/rules-of-hooks': [
+      'off',
+    ],
     'import/no-extraneous-dependencies': [
       'off',
       {
