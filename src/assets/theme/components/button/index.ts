@@ -18,8 +18,6 @@ export const button = (
   const { fontWeightBold, size } = theme.typography;
   const { pxToRem } = theme.functions;
 
-  const rootStyle = (ownerState: ButtonProps) => {};
-
   return {
     MuiButtonBase: {
       styleOverrides: {

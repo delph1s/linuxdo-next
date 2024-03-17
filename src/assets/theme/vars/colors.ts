@@ -5,10 +5,10 @@ export const palette = (themeMode: ThemeMode): PaletteType => {
   const isLight = themeMode === 'light';
 
   return {
-    // common: {
-    //   black: '#000000',
-    //   white: '#FFFFFF',
-    // },
+    common: {
+      black: '#000000',
+      white: '#FFFFFF',
+    },
     white: {
       main: '#FFFFFF',
       focus: '#FFFFFF',
@@ -24,31 +24,38 @@ export const palette = (themeMode: ThemeMode): PaletteType => {
     primary: {
       main: '#E91E63',
       focus: '#E91E63',
+      contrastText: '#F0F2F5',
     },
     secondary: {
       main: '#7B809A',
       focus: '#8F93A9',
+      contrastText: '#F0F2F5',
     },
     error: {
       main: '#F44335',
       focus: '#F65F53',
+      contrastText: '#F0F2F5',
     },
     warning: {
       main: '#FB8C00',
       focus: '#FC9D26',
+      contrastText: '#F0F2F5',
     },
     info: {
       main: '#1A73E8',
       focus: '#1662C4',
+      contrastText: '#F0F2F5',
     },
     success: {
       main: '#4CAF50',
       focus: '#67BB6A',
+      contrastText: '#F0F2F5',
     },
     light: isLight
       ? {
           main: '#F0F2F5',
           focus: '#F0F2F5',
+          contrastText: '#344767',
         }
       : {
           main: '#F0F2F566',

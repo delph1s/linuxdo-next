@@ -12,7 +12,7 @@ dependencies:
     specifier: 11.11.0
     version: 11.11.0(@emotion/react@11.11.4)(@types/react@18.2.64)(react@18.2.0)
   '@mui/icons-material':
-    specifier: ^5.15.13
+    specifier: 5.15.13
     version: 5.15.13(@mui/material@5.15.12)(@types/react@18.2.64)(react@18.2.0)
   '@mui/lab':
     specifier: 5.0.0-alpha.168
@@ -21,7 +21,7 @@ dependencies:
     specifier: 5.15.12
     version: 5.15.12(@emotion/react@11.11.4)(@emotion/styled@11.11.0)(@types/react@18.2.64)(react-dom@18.2.0)(react@18.2.0)
   chroma-js:
-    specifier: ^2.4.2
+    specifier: 2.4.2
     version: 2.4.2
   dayjs:
     specifier: 1.11.10
@@ -100,6 +100,9 @@ devDependencies:
   sass:
     specifier: 1.71.1
     version: 1.71.1
+  type-fest:
+    specifier: ^4.12.0
+    version: 4.12.0
   typescript:
     specifier: 5.4.2
     version: 5.4.2
@@ -3944,6 +3947,11 @@ packages:
   /type-fest@0.20.2:
     resolution: {integrity: sha512-Ne+eE4r0/iWnpAxD852z3A+N0Bt5RN//NjJwRd2VFHEmrywxf5vsZlh4R6lixl6B+wz/8d+maTSAkN1FIkI3LQ==}
     engines: {node: '>=10'}
+    dev: true
+
+  /type-fest@4.12.0:
+    resolution: {integrity: sha512-5Y2/pp2wtJk8o08G0CMkuFPCO354FGwk/vbidxrdhRGZfd0tFnb4Qb8anp9XxXriwBgVPjdWbKpGl4J9lJY2jQ==}
+    engines: {node: '>=16'}
     dev: true
 
   /typed-array-buffer@1.0.2:

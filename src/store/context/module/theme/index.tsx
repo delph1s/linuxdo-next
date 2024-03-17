@@ -77,7 +77,7 @@ function ThemeProvider({ children, ...restProps }: ThemeProviderProps) {
   return (
     <MuiThemeProvider theme={theme}>
       {/* <CssBaseline /> */}
-      <GlobalStyles />
+      {/* <GlobalStyles /> */}
       {children}
     </MuiThemeProvider>
   );

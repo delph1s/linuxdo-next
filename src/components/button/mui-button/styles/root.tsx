@@ -1,18 +1,21 @@
 import { ThemeColorSchema } from '@assets/theme/vars/types';
-import Button, { ButtonProps } from "@mui/material/Button";
-import { styled, Theme } from "@mui/material/styles";
+import { ButtonOwnerStateType } from '@components/button/mui-button';
+import { filterForwardProps } from '@core/utils/filters';
+import Button, { ButtonProps } from '@mui/material/Button';
+import { styled, Theme } from '@mui/material/styles';
+import lodashHas from 'lodash/has';
 
-type OwnerStateType = {
-  color?: ThemeColorSchema | 'white';
-  variant?: ButtonProps['variant'];
-  size?: ButtonProps['size'];
-  circular?: boolean;
-  iconOnly?: boolean;
+type StyledButtonProps = ButtonProps & {
+  ownerState: ButtonOwnerStateType;
 };
 
-const ButtonRoot = styled(Button)(({ theme, ownerState }: { theme: Theme; ownerState: OwnerStateType }) => {
+const ButtonRoot = styled(Button, {
+  shouldForwardProp: (fieldName: string) => filterForwardProps(fieldName, ['ownerState']),
+})<StyledButtonProps>(({ ownerState, theme }) => {
   const { palette, functions, borders, boxShadows } = theme;
-  const { color, variant, size, circular, iconOnly, darkMode } = ownerState;
+  const { variant, size, circular, iconOnly } = ownerState;
+  const color = ownerState.color || 'primary';
+  const darkMode = theme.palette.mode;
 
   const { white, text, transparent, gradients, grey } = palette;
   const { boxShadow, linearGradient, pxToRem, rgba } = functions;
@@ -28,40 +31,40 @@ const ButtonRoot = styled(Button)(({ theme, ownerState }: { theme: Theme; ownerS
     const focusedBackgroundValue = palette[color] ? palette[color].focus : white.focus;
 
     // boxShadow value
-    const boxShadowValue = colored[color]
+    const boxShadowValue = lodashHas(colored, color)
       ? `${boxShadow([0, 3], [3, 0], palette[color].main, 0.15)}, ${boxShadow(
-        [0, 3],
-        [1, -2],
-        palette[color].main,
-        0.2
-      )}, ${boxShadow([0, 1], [5, 0], palette[color].main, 0.15)}`
-      : "none";
+          [0, 3],
+          [1, -2],
+          palette[color].main,
+          0.2,
+        )}, ${boxShadow([0, 1], [5, 0], palette[color].main, 0.15)}`
+      : 'none';
 
     // boxShadow value when button is hovered
-    const hoveredBoxShadowValue = colored[color]
+    const hoveredBoxShadowValue = lodashHas(colored, color)
       ? `${boxShadow([0, 14], [26, -12], palette[color].main, 0.4)}, ${boxShadow(
-        [0, 4],
-        [23, 0],
-        palette[color].main,
-        0.15
-      )}, ${boxShadow([0, 8], [10, -5], palette[color].main, 0.2)}`
-      : "none";
+          [0, 4],
+          [23, 0],
+          palette[color].main,
+          0.15,
+        )}, ${boxShadow([0, 8], [10, -5], palette[color].main, 0.2)}`
+      : 'none';
 
     // color value
     let colorValue = white.main;
 
-    if (!darkMode && (color === "white" || color === "light" || !palette[color])) {
+    if (!darkMode && (color === 'white' || color === 'light' || !palette[color])) {
       colorValue = text.main;
-    } else if (darkMode && (color === "white" || color === "light" || !palette[color])) {
-      colorValue = grey[600];
+    } else if (darkMode && (color === 'white' || color === 'light' || !palette[color])) {
+      colorValue = grey['600'];
     }
 
     // color value when button is focused
     let focusedColorValue = white.main;
 
-    if (color === "white") {
+    if (color === 'white') {
       focusedColorValue = text.main;
-    } else if (color === "primary" || color === "error" || color === "dark") {
+    } else if (color === 'primary' || color === 'error' || color === 'dark') {
       focusedColorValue = white.main;
     }
 
@@ -70,13 +73,13 @@ const ButtonRoot = styled(Button)(({ theme, ownerState }: { theme: Theme; ownerS
       color: colorValue,
       boxShadow: boxShadowValue,
 
-      "&:hover": {
+      '&:hover': {
         backgroundColor: backgroundValue,
         color: colorValue,
         boxShadow: hoveredBoxShadowValue,
       },
 
-      "&:focus:not(:hover)": {
+      '&:focus:not(:hover)': {
         backgroundColor: focusedBackgroundValue,
         color: colorValue,
         boxShadow: palette[color]
@@ -84,7 +87,7 @@ const ButtonRoot = styled(Button)(({ theme, ownerState }: { theme: Theme; ownerS
           : boxShadow([0, 0], [0, 3.2], white.main, 0.5),
       },
 
-      "&:disabled": {
+      '&:disabled': {
         backgroundColor: backgroundValue,
         color: focusedColorValue,
       },
@@ -94,7 +97,7 @@ const ButtonRoot = styled(Button)(({ theme, ownerState }: { theme: Theme; ownerS
   // styles for the button with variant="outlined"
   const outlinedStyles = () => {
     // background color value
-    const backgroundValue = color === "white" ? rgba(white.main, 0.1) : transparent.main;
+    const backgroundValue = color === 'white' ? rgba(white.main, 0.1) : transparent.main;
 
     // color value
     const colorValue = palette[color] ? palette[color].main : white.main;
@@ -107,7 +110,7 @@ const ButtonRoot = styled(Button)(({ theme, ownerState }: { theme: Theme; ownerS
     // border color value
     let borderColorValue = palette[color] ? palette[color].main : rgba(white.main, 0.75);
 
-    if (color === "white") {
+    if (color === 'white') {
       borderColorValue = rgba(white.main, 0.75);
     }
 
@@ -116,26 +119,26 @@ const ButtonRoot = styled(Button)(({ theme, ownerState }: { theme: Theme; ownerS
       color: colorValue,
       border: `${pxToRem(1)} solid ${borderColorValue}`,
 
-      "&:hover": {
+      '&:hover': {
         background: transparent.main,
         color: colorValue,
         borderColor: colorValue,
         opacity: 0.85,
       },
 
-      "&:focus:not(:hover)": {
+      '&:focus:not(:hover)': {
         background: transparent.main,
         color: colorValue,
         boxShadow: boxShadowValue,
       },
 
-      "&:active:not(:hover)": {
+      '&:active:not(:hover)': {
         backgroundColor: colorValue,
         color: white.main,
         opacity: 0.85,
       },
 
-      "&:disabled": {
+      '&:disabled': {
         color: colorValue,
         borderColor: colorValue,
       },
@@ -146,36 +149,36 @@ const ButtonRoot = styled(Button)(({ theme, ownerState }: { theme: Theme; ownerS
   const gradientStyles = () => {
     // background value
     const backgroundValue =
-      color === "white" || !gradients[color]
+      color === 'white' || !gradients[color]
         ? white.main
         : linearGradient(gradients[color].main, gradients[color].state);
 
     // boxShadow value
-    const boxShadowValue = colored[color]
+    const boxShadowValue = lodashHas(colored, color)
       ? `${boxShadow([0, 3], [3, 0], palette[color].main, 0.15)}, ${boxShadow(
-        [0, 3],
-        [1, -2],
-        palette[color].main,
-        0.2
-      )}, ${boxShadow([0, 1], [5, 0], palette[color].main, 0.15)}`
-      : "none";
+          [0, 3],
+          [1, -2],
+          palette[color].main,
+          0.2,
+        )}, ${boxShadow([0, 1], [5, 0], palette[color].main, 0.15)}`
+      : 'none';
 
     // boxShadow value when button is hovered
-    const hoveredBoxShadowValue = colored[color]
+    const hoveredBoxShadowValue = lodashHas(colored, color)
       ? `${boxShadow([0, 14], [26, -12], palette[color].main, 0.4)}, ${boxShadow(
-        [0, 4],
-        [23, 0],
-        palette[color].main,
-        0.15
-      )}, ${boxShadow([0, 8], [10, -5], palette[color].main, 0.2)}`
-      : "none";
+          [0, 4],
+          [23, 0],
+          palette[color].main,
+          0.15,
+        )}, ${boxShadow([0, 8], [10, -5], palette[color].main, 0.2)}`
+      : 'none';
 
     // color value
     let colorValue = white.main;
 
-    if (color === "white") {
+    if (color === 'white') {
       colorValue = text.main;
-    } else if (color === "light") {
+    } else if (color === 'light') {
       colorValue = gradients.dark.state;
     }
 
@@ -184,17 +187,17 @@ const ButtonRoot = styled(Button)(({ theme, ownerState }: { theme: Theme; ownerS
       color: colorValue,
       boxShadow: boxShadowValue,
 
-      "&:hover": {
+      '&:hover': {
         boxShadow: hoveredBoxShadowValue,
         color: colorValue,
       },
 
-      "&:focus:not(:hover)": {
+      '&:focus:not(:hover)': {
         boxShadow: boxShadowValue,
         color: colorValue,
       },
 
-      "&:disabled": {
+      '&:disabled': {
         background: backgroundValue,
         color: colorValue,
       },
@@ -212,11 +215,11 @@ const ButtonRoot = styled(Button)(({ theme, ownerState }: { theme: Theme; ownerS
     return {
       color: colorValue,
 
-      "&:hover": {
+      '&:hover': {
         color: focusedColorValue,
       },
 
-      "&:focus:not(:hover)": {
+      '&:focus:not(:hover)': {
         color: focusedColorValue,
       },
     };
@@ -232,18 +235,18 @@ const ButtonRoot = styled(Button)(({ theme, ownerState }: { theme: Theme; ownerS
     // width, height, minWidth and minHeight values
     let sizeValue = pxToRem(38);
 
-    if (size === "small") {
+    if (size === 'small') {
       sizeValue = pxToRem(25.4);
-    } else if (size === "large") {
+    } else if (size === 'large') {
       sizeValue = pxToRem(52);
     }
 
     // padding value
     let paddingValue = `${pxToRem(11)} ${pxToRem(11)} ${pxToRem(10)}`;
 
-    if (size === "small") {
+    if (size === 'small') {
       paddingValue = pxToRem(4.5);
-    } else if (size === "large") {
+    } else if (size === 'large') {
       paddingValue = pxToRem(16);
     }
 
@@ -254,22 +257,24 @@ const ButtonRoot = styled(Button)(({ theme, ownerState }: { theme: Theme; ownerS
       minHeight: sizeValue,
       padding: paddingValue,
 
-      "& .material-icons": {
+      '& .material-icons': {
         marginTop: 0,
       },
 
-      "&:hover, &:focus, &:active": {
-        transform: "none",
+      '&:hover, &:focus, &:active': {
+        transform: 'none',
       },
     };
   };
 
   return {
-    ...(variant === "contained" && containedStyles()),
-    ...(variant === "outlined" && outlinedStyles()),
-    ...(variant === "gradient" && gradientStyles()),
-    ...(variant === "text" && textStyles()),
+    ...(variant === 'contained' && containedStyles()),
+    ...(variant === 'outlined' && outlinedStyles()),
+    ...(variant === 'gradient' && gradientStyles()),
+    ...(variant === 'text' && textStyles()),
     ...(circular && circularStyles()),
     ...(iconOnly && iconOnlyStyles()),
   };
 });
+
+export default ButtonRoot;

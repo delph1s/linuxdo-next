@@ -30,7 +30,7 @@ export default defineConfig({
         // downloadURL: '',
         // supportURL: '',
         // include: [],
-        match: ['*://linux.do/', '*://linux.do/*'],
+        match: ['*://linux.do/', '*://linux.do/*', '*://connect.linux.do/'],
         // 'exclude-match': [],
         // exclude: [],
         // require: [],

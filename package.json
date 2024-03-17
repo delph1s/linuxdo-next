@@ -8,17 +8,19 @@
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
+  "peerDependencies": {
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
   "dependencies": {
     "@emotion/react": "11.11.4",
     "@emotion/styled": "11.11.0",
     "@mui/icons-material": "5.15.13",
     "@mui/lab": "5.0.0-alpha.168",
     "@mui/material": "5.15.12",
-    "chroma-js": "^2.4.2",
+    "chroma-js": "2.4.2",
     "dayjs": "1.11.10",
-    "lodash": "4.17.21",
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "lodash": "4.17.21"
   },
   "devDependencies": {
     "@types/chroma-js": "^2.4.4",
@@ -42,6 +44,7 @@
     "eslint-plugin-simple-import-sort": "12.0.0",
     "prettier": "3.2.5",
     "sass": "1.71.1",
+    "type-fest": "4.12.0",
     "typescript": "5.4.2",
     "vite": "5.1.5",
     "vite-plugin-monkey": "3.5.1",

@@ -1,4 +1,11 @@
-import { PaletteAugmentColorOptions, PaletteColor, PaletteTonalOffset, TypeAction, TypeBackground, TypeDivider } from '@mui/material/styles/createPalette';
+import {
+  PaletteAugmentColorOptions,
+  PaletteColor,
+  PaletteTonalOffset,
+  TypeAction,
+  TypeBackground,
+  TypeDivider,
+} from '@mui/material/styles/createPalette';
 
 export type ThemeMode = 'light' | 'dark';
 
@@ -77,6 +84,7 @@ type ColorStep = {
 type ColorType = {
   main: string;
   focus: string;
+  contrastText?: string;
 };
 
 type ColorGradientsType = {
@@ -90,7 +98,10 @@ type ColorBadgesType = {
 };
 
 export type PaletteType = {
-  // common: { white: string; black: string };
+  common: {
+    white: string;
+    black: string;
+  };
   white: ColorType;
   black: {
     light: string;

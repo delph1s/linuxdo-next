@@ -1,9 +1,15 @@
+import Button from '@components/button/mui-button';
 import { PandoraButtonPosition } from '@components/button/pandora-button/types';
+import LeveltrustDialog from '@components/dialog/leveltrust-dialog';
 import { uiConfig } from '@config/ui';
 import { getCsrfToken, getPreloadedUsername } from '@core/dom';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Box } from '@mui/material';
-import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { fetchForumAbout, fetchGetInvites, fetchUpdateInvite } from '@src/server';
@@ -89,6 +95,15 @@ function PandoraDrawer({
     }
   };
 
+  const [levelInfoOpen, setLevelInfoOpen] = useState<boolean>(false);
+  const handleToggleLevelInfoDialog = (state?: boolean) => {
+    if (state === undefined) {
+      setLevelInfoOpen(prevState => !prevState);
+    } else {
+      setLevelInfoOpen(state);
+    }
+  };
+
   return (
     <StyledPandoraDrawer
       anchor={drawerPosition}
@@ -101,12 +116,13 @@ function PandoraDrawer({
       openPandora={openDrawer}
       drawerPosition={drawerPosition}
     >
-      <Box component="div" sx={{ m: '0.5rem' }}>
+      <Box component="div" sx={{ width: 'calc(280px - 1rem)', m: '0.5rem' }}>
         <LoadingButton variant="contained" loading={isFetching} onClick={() => handleModifyInvitesExpiredTime()}>
           一键修改邀请时限
         </LoadingButton>
         <Button
-          variant="contained"
+          color="info"
+          variant="gradient"
           disabled={!isFetching}
           onClick={() => {
             forceStop.current = true;
@@ -114,9 +130,15 @@ function PandoraDrawer({
         >
           停止修改邀请时限
         </Button>
+        <br />
         <LoadingButton variant="contained" loading={isFetching} onClick={() => handleGetForumAbout()}>
           获取 linux.do 论坛统计数据
         </LoadingButton>
+        <br />
+        <Button color="info" variant="gradient" disabled={isFetching} onClick={() => handleToggleLevelInfoDialog(true)}>
+          查看等级数据
+        </Button>
+        <LeveltrustDialog open={levelInfoOpen} toggleOpen={handleToggleLevelInfoDialog} />
       </Box>
     </StyledPandoraDrawer>
   );
