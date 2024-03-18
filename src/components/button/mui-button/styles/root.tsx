@@ -1,5 +1,5 @@
 import { ThemeColorSchema } from '@assets/theme/vars/types';
-import { ButtonOwnerStateType } from '@components/button/mui-button';
+import type { ButtonOwnerStateType } from '@components/button/mui-button/types';
 import { filterForwardProps } from '@core/utils/filters';
 import Button, { ButtonProps } from '@mui/material/Button';
 import { styled, Theme } from '@mui/material/styles';

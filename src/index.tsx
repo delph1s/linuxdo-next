@@ -1,6 +1,8 @@
 import '@assets/scss/index.scss';
 
 import styles from '@assets/scss/vars.module.scss';
+import type { LeveltrustRequireData } from '@components/dialog/leveltrust-dialog';
+// import { obsChildListSubtree } from '@core/observe';
 import { qsAll, qsOne } from '@core/utils';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
@@ -28,7 +30,7 @@ if (window.location.hostname === 'connect.linux.do') {
   tableTr.forEach(value => {
     tableData.push(value.textContent || '');
   });
-  const tableDataClear = {
+  const tableDataClear: LeveltrustRequireData = {
     visitCount: tableData[1],
     visitCountRequire: tableData[2],
     repliedTopic: tableData[4],
@@ -56,9 +58,9 @@ if (window.location.hostname === 'connect.linux.do') {
     postBanned: tableData[37],
     postBannedRequire: tableData[38],
     allBannedUser: tableData[37],
-    allBannedRequire: tableData[38],
+    allBannedUserRequire: tableData[38],
   };
-  window.parent.postMessage(tableData);
+  window.parent.postMessage(tableDataClear, { targetOrigin: 'https://linux.do/' });
 }
 
 // // 目标容器的选择器
