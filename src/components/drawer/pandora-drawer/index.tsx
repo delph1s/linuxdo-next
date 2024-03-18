@@ -1,6 +1,6 @@
 import Button from '@components/button/mui-button';
 import { PandoraButtonPosition } from '@components/button/pandora-button/types';
-import LeveltrustDialog from '@components/dialog/leveltrust-dialog';
+import TrustLevelDialog from '../../dialog/trust-level-dialog';
 import { uiConfig } from '@config/ui';
 import { getCsrfToken, getPreloadedUsername } from '@core/dom';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -138,7 +138,7 @@ function PandoraDrawer({
         <Button color="info" variant="gradient" disabled={isFetching} onClick={() => handleToggleLevelInfoDialog(true)}>
           查看等级数据
         </Button>
-        <LeveltrustDialog open={levelInfoOpen} toggleOpen={handleToggleLevelInfoDialog} />
+        <TrustLevelDialog open={levelInfoOpen} toggleOpen={handleToggleLevelInfoDialog} />
       </Box>
     </StyledPandoraDrawer>
   );

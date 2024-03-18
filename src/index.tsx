@@ -1,7 +1,7 @@
 import '@assets/scss/index.scss';
 
 import styles from '@assets/scss/vars.module.scss';
-import type { LeveltrustRequireData } from '@components/dialog/leveltrust-dialog';
+import type { TrustLevelRequireData } from '@components/dialog/trust-level-dialog';
 // import { obsChildListSubtree } from '@core/observe';
 import { qsAll, qsOne } from '@core/utils';
 import React from 'react';
@@ -30,7 +30,7 @@ if (window.location.hostname === 'connect.linux.do') {
   tableTr.forEach(value => {
     tableData.push(value.textContent || '');
   });
-  const tableDataClear: LeveltrustRequireData = {
+  const tableDataClear: TrustLevelRequireData = {
     visitCount: tableData[1],
     visitCountRequire: tableData[2],
     repliedTopic: tableData[4],

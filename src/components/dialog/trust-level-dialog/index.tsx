@@ -3,19 +3,17 @@ import LinearProgress from '@components/progress/mui-linear-progress';
 import { LinearProgressProps } from '@components/progress/mui-linear-progress/types';
 import Typography from '@components/typography/mui-typography';
 import { getCsrfToken, getPreloadedUsername } from '@core/dom';
-import Box from '@mui/material/Box';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Skeleton from '@mui/material/Skeleton';
 import { UserProfile } from '@server/user/types';
-import { fetchGetUserSummary, fetchUserProfile } from '@src/server';
+import { fetchUserProfile } from '@src/server';
 import lodashHas from 'lodash/has';
 import React, { useEffect, useRef, useState } from 'react';
 
-export type LeveltrustRequireData = {
+export type TrustLevelRequireData = {
   visitCount: string;
   visitCountRequire: string;
   repliedTopic: string;
@@ -46,19 +44,19 @@ export type LeveltrustRequireData = {
   allBannedUserRequire: string;
 };
 
-type LeveltrustRequireVisualData = {
+type TrustLevelRequireVisualData = {
   title: string;
   value: number;
   requireValue: number;
   calc: string;
 };
 
-type LeveltrustDialogProps = {
+type TrustLevelDialogProps = {
   open: boolean;
   toggleOpen: (state?: boolean) => void;
 };
 
-function LinearProgressWithLabel(props: LinearProgressProps & LeveltrustRequireVisualData) {
+function LinearProgressWithLabel(props: LinearProgressProps & TrustLevelRequireVisualData) {
   const calResult = (
     v: number,
     rv: number,
@@ -106,10 +104,10 @@ function LinearProgressWithLabel(props: LinearProgressProps & LeveltrustRequireV
   );
 }
 
-function LeveltrustDialog({ open = false, toggleOpen }: LeveltrustDialogProps) {
+function TrustLevelDialog({ open = false, toggleOpen }: TrustLevelDialogProps) {
   const connectLinuxDoIframeRef = useRef<HTMLIFrameElement>(null);
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
-  const [trustLevelData, setTrustLevelData] = useState<LeveltrustRequireVisualData[]>([]);
+  const [trustLevelData, setTrustLevelData] = useState<TrustLevelRequireVisualData[]>([]);
 
   const extractValue = (value: string): number => {
     if (value.includes('%')) {
@@ -146,7 +144,7 @@ function LeveltrustDialog({ open = false, toggleOpen }: LeveltrustDialogProps) {
         requireValue: string;
         calc?: string;
       }[],
-    ): LeveltrustRequireVisualData[] => {
+    ): TrustLevelRequireVisualData[] => {
       return items.map(item => {
         const value = extractValue(item.value);
         const requireValue = extractRequireValue(item.requireValue);
@@ -163,7 +161,7 @@ function LeveltrustDialog({ open = false, toggleOpen }: LeveltrustDialogProps) {
 
     const connectLinuxDoListener = (e: MessageEvent<any>) => {
       if (lodashHas(e.data, 'allBannedUserRequire')) {
-        const { data: leveltrustRequireData }: { data: LeveltrustRequireData } = e;
+        const { data: leveltrustRequireData }: { data: TrustLevelRequireData } = e;
         const ltList = [
           {
             title: '访问次数',
@@ -319,4 +317,4 @@ function LeveltrustDialog({ open = false, toggleOpen }: LeveltrustDialogProps) {
   );
 }
 
-export default LeveltrustDialog;
+export default TrustLevelDialog;
