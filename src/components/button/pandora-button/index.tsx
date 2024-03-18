@@ -1,5 +1,5 @@
+import { ButtonProps } from '@components/button/mui-button/types';
 import { PandoraButtonPosition } from '@components/button/pandora-button/types';
-import Button, { ButtonProps } from '@mui/material/Button';
 import React, { useRef, useState } from 'react';
 
 import { StyledPandoraButton } from './styles';
@@ -16,7 +16,7 @@ function PandoraButton({ openPandora = false, pandoraButtonPosition = 'right', .
   // 鼠标悬停和离开事件处理
   const handleMouseEnter = () => {
     clearTimeout(visibleTimeout.current);
-    setVisible(true)
+    setVisible(true);
   };
   const handleMouseLeave = () => {
     visibleTimeout.current = setTimeout(() => setVisible(false), 1500); // 1.5 秒后消失
