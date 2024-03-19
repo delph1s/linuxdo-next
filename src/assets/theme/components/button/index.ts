@@ -1,6 +1,5 @@
 import { MuiThemeOptionsComponents } from '@assets/theme/vars/mui';
 import { buttonClasses, ButtonProps } from '@mui/material/Button';
-import { IconClasses } from '@mui/material/Icon';
 import { alpha, Theme } from '@mui/material/styles';
 
 export const button = (
@@ -20,8 +19,8 @@ export const button = (
 
   return {
     MuiButtonBase: {
-      styleOverrides: {
-        root: {},
+      defaultProps: {
+        disableRipple: false,
       },
     },
     MuiButton: {
@@ -374,14 +373,14 @@ export const button = (
       },
     },
     MuiIconButton: {
-      styleOverrides: {
-        root: {},
-      },
+      // styleOverrides: {
+      //   root: {},
+      // },
     },
     MuiListItemButton: {
-      styleOverrides: {
-        root: {},
-      },
+      // styleOverrides: {
+      //   root: {},
+      // },
     },
   };
 };

@@ -1,6 +1,6 @@
 import { MuiThemeOptionsComponents } from '@assets/theme/vars/mui';
-import { CircularProgressClasses } from '@mui/material/CircularProgress';
-import { LinearProgressClasses } from '@mui/material/LinearProgress';
+// import { circularProgressClasses } from '@mui/material/CircularProgress';
+// import { linearProgressClasses } from '@mui/material/LinearProgress';
 import { alpha, Theme } from '@mui/material/styles';
 
 export const progress = (

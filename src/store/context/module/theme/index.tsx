@@ -43,10 +43,10 @@ function ThemeProvider({ children, ...restProps }: ThemeProviderProps) {
   const baseOption: ThemeOptions = useMemo(() => {
     return {
       breakpoints: { ...breakpoints },
-      palette: palette('light'),
-      typography: typography('light'),
-      boxShadows: boxShadows('light'),
-      borders: borders('light'),
+      palette: palette('dark'),
+      typography: typography('dark'),
+      boxShadows: boxShadows('dark'),
+      borders: borders('dark'),
       functions: {
         boxShadow,
         hexToRgb,

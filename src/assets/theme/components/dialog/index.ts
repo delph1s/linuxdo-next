@@ -1,7 +1,9 @@
 import { MuiThemeOptionsComponents } from '@assets/theme/vars/mui';
-import { CardClasses } from '@mui/material/Card';
-import { CardContentClasses } from '@mui/material/CardContent';
-import { CardMediaClasses } from '@mui/material/CardMedia';
+// import { dialogClasses } from '@mui/material/Dialog';
+// import { dialogActionsClasses } from '@mui/material/DialogActions';
+// import { dialogContentClasses } from '@mui/material/DialogContent';
+// import { dialogContentTextClasses } from '@mui/material/DialogContentText';
+// import { dialogTitleClasses } from '@mui/material/DialogTitle';
 import { alpha, Theme } from '@mui/material/styles';
 
 export const dialog = (

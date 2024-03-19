@@ -309,7 +309,7 @@ function TrustLevelDialog({ open = false, toggleOpen }: TrustLevelDialogProps) {
           ))}
       </DialogContent>
       <DialogActions>
-        <Button color='success' onClick={() => toggleOpen(false)} autoFocus>
+        <Button color='info' onClick={() => toggleOpen(false)}>
           好的，我知道了
         </Button>
       </DialogActions>
