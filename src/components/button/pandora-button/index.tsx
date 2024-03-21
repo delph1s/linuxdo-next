@@ -24,14 +24,12 @@ function PandoraButton({ openPandora = false, pandoraButtonPosition = 'right', .
 
   return (
     <StyledPandoraButton
-      variant="contained"
-      color="primary"
+      {...restProps}
       openPandora={openPandora}
       buttonPosition={pandoraButtonPosition}
       buttonVisible={visible}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      {...restProps}
     >
       {openPandora ? '关闭助手' : '打开助手'}
     </StyledPandoraButton>

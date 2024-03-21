@@ -2,7 +2,6 @@ import Button from '@components/button/mui-button';
 import { PandoraButtonPosition } from '@components/button/pandora-button/types';
 import { uiConfig } from '@config/ui';
 import { filterForwardProps } from '@core/utils/filters';
-import MuiButton, { ButtonProps } from '@mui/material/Button';
 import { CSSObject, styled, useTheme } from '@mui/material/styles';
 
 type PandoraButtonProps = {

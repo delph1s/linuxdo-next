@@ -8,9 +8,11 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Skeleton from '@mui/material/Skeleton';
+import Tooltip from '@mui/material/Tooltip';
 import { UserProfile } from '@server/user/types';
 import { fetchUserProfile } from '@src/server';
 import lodashHas from 'lodash/has';
+import lodashUniqueId from 'lodash/uniqueId';
 import React, { useEffect, useRef, useState } from 'react';
 
 export type TrustLevelRequireData = {
@@ -255,7 +257,7 @@ function TrustLevelDialog({ open = false, toggleOpen }: TrustLevelDialogProps) {
         {userProfile &&
           (userProfile.user.trust_level >= 2 ? (
             <>
-              <Typography id="leveltrust-info-dialog-description">
+              <Typography variant="body1">
                 {`你的用户等级为${userProfile.user.trust_level}级，精确信息通过 connect.linux.do 查询`}
               </Typography>
 
@@ -276,6 +278,7 @@ function TrustLevelDialog({ open = false, toggleOpen }: TrustLevelDialogProps) {
               {trustLevelData.length > 0 ? (
                 trustLevelData.map(ltd => (
                   <LinearProgressWithLabel
+                    key={lodashUniqueId('tlProcess')}
                     title={ltd.title}
                     value={ltd.value}
                     requireValue={ltd.requireValue}
@@ -309,7 +312,16 @@ function TrustLevelDialog({ open = false, toggleOpen }: TrustLevelDialogProps) {
           ))}
       </DialogContent>
       <DialogActions>
-        <Button color='info' onClick={() => toggleOpen(false)}>
+        <Tooltip title="点击跳转 2024.03.19 更新说明" placement="top">
+          <Button
+            color="error"
+            variant="text"
+            onClick={() => window.open('https://linux.do/t/topic/35204?u=delph1s#h-2024-03-19-7', '_blank')}
+          >
+            一直无法显示？
+          </Button>
+        </Tooltip>
+        <Button color="info" onClick={() => toggleOpen(false)}>
           好的，我知道了
         </Button>
       </DialogActions>

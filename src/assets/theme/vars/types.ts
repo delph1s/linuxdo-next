@@ -1,9 +1,9 @@
 import {
-  PaletteAugmentColorOptions,
-  PaletteColor,
-  PaletteTonalOffset,
+  // PaletteAugmentColorOptions,
+  // PaletteColor,
+  // PaletteTonalOffset,
   TypeAction,
-  TypeBackground,
+  // TypeBackground,
   TypeDivider,
 } from '@mui/material/styles/createPalette';
 
@@ -138,7 +138,14 @@ export type PaletteType = {
     dark: ColorBadgesType;
   };
   coloredShadows: {
-    [key: string]: string;
+    primary: string;
+    secondary: string;
+    info: string;
+    success: string;
+    warning: string;
+    error: string;
+    light: string;
+    dark: string;
   };
   grey: ColorStep;
   text: ColorType & {
@@ -146,8 +153,8 @@ export type PaletteType = {
     secondary?: string;
     disabled?: string;
   };
-  // divider: TypeDivider;
-  // action: TypeAction;
+  divider?: TypeDivider,
+  action?: Partial<TypeAction>;
   background: {
     default: string;
     sidenav?: string;
@@ -168,7 +175,7 @@ export type PaletteType = {
 export const CoreColors = ['primary', 'secondary', 'info', 'success', 'warning', 'error'] as const;
 export const ThemeColors = ['primary', 'secondary', 'info', 'success', 'warning', 'error', 'light', 'dark'] as const;
 export const PromptColors = ['info', 'success', 'warning', 'error'] as const;
-export type ColorSchema = (typeof CoreColors)[number];
+export type CoreColorSchema = (typeof CoreColors)[number];
 export type ThemeColorSchema = (typeof ThemeColors)[number];
 export type PromptColorSchema = (typeof PromptColors)[number];
 

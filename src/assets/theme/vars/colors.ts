@@ -170,7 +170,19 @@ export const palette = (themeMode: ThemeMode): PaletteType => {
           focus: '#FFFFFFCC',
         },
     // divider: TypeDivider;
-    // action: TypeAction;
+    // action: {
+      // active: string;
+      // hover: string;
+      // hoverOpacity: number;
+      // selected: string;
+      // selectedOpacity: number;
+      // disabled: string;
+      // disabledOpacity: number;
+      // disabledBackground: string;
+      // focus: string;
+      // focusOpacity: number;
+      // activatedOpacity: number;
+    // },
     background: isLight
       ? {
           default: '#F0F2F5',
