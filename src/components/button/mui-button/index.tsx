@@ -1,6 +1,5 @@
-import { ThemeColorSchema } from '@assets/theme/vars/types';
 import { ButtonProps as MuiButtonProps } from '@mui/material/Button';
-import React, { forwardRef, ReactNode } from 'react';
+import React, { forwardRef } from 'react';
 
 import ButtonRoot from './styles/root';
 import type { ButtonProps } from './types';
@@ -8,7 +7,7 @@ import type { ButtonProps } from './types';
 const Button = forwardRef(
   (
     {
-      color = 'white',
+      color = 'info',
       variant = 'gradient',
       size = 'medium',
       circular = false,
@@ -20,12 +19,15 @@ const Button = forwardRef(
   ) => {
     const getColor = (rawColor: ButtonProps['color']): MuiButtonProps['color'] => {
       const validColors: MuiButtonProps['color'][] = [
+        'white',
         'primary',
         'secondary',
         'info',
         'success',
         'warning',
         'error',
+        'dark',
+        'light',
       ];
       return validColors.includes(rawColor as MuiButtonProps['color'])
         ? (rawColor as MuiButtonProps['color'])

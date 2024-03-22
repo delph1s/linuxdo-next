@@ -2,7 +2,7 @@ export const qsFilter = (selector: string) => {
   return selector;
 };
 
-type DocumentQuerySelector = {
+type DocumentQuerySelectorOne = {
   /**
    * 同 `document.querySelector`
    * @param selector 选择器
@@ -16,7 +16,7 @@ type DocumentQuerySelector = {
   (element: Element, scopedSelector: string): Element | null;
 };
 
-export const qsOne: DocumentQuerySelector = (
+export const qsOne: DocumentQuerySelectorOne = (
   selectorOrElement: string | Element,
   scopedSelector?: string
 ) => {

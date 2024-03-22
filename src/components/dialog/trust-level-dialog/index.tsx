@@ -10,47 +10,15 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Skeleton from '@mui/material/Skeleton';
 import Tooltip from '@mui/material/Tooltip';
 import { UserProfile } from '@server/user/types';
-import { fetchUserProfile } from '@src/server';
-import lodashHas from 'lodash/has';
+import { fetchRealTrustLevelInfo, fetchUserProfile, TrustLevelRequireRawData } from '@src/server';
 import lodashUniqueId from 'lodash/uniqueId';
 import React, { useEffect, useRef, useState } from 'react';
 
-export type TrustLevelRequireData = {
-  visitCount: string;
-  visitCountRequire: string;
-  repliedTopic: string;
-  repliedTopicRequire: string;
-  viewedTopic: string;
-  viewedTopicRequire: string;
-  viewedTopicAll: string;
-  viewedTopicAllRequire: string;
-  viewedPost: string;
-  viewedPostRequire: string;
-  viewedPostAll: string;
-  viewedPostAllRequire: string;
-  reportedPost: string;
-  reportedPostRequire: string;
-  reportedUser: string;
-  reportedUserRequire: string;
-  likes: string;
-  likesRequire: string;
-  liked: string;
-  likedRequire: string;
-  likedTopSingleDay: string;
-  likedTopSingleDayRequire: string;
-  likedUser: string;
-  likedUserRequire: string;
-  postBanned: string;
-  postBannedRequire: string;
-  allBannedUser: string;
-  allBannedUserRequire: string;
-};
-
-type TrustLevelRequireVisualData = {
+type TrustLevelRequireProgressData = {
   title: string;
   value: number;
-  requireValue: number;
-  calc: string;
+  label: string;
+  color: 'success' | 'error' | 'primary';
 };
 
 type TrustLevelDialogProps = {
@@ -58,50 +26,20 @@ type TrustLevelDialogProps = {
   toggleOpen: (state?: boolean) => void;
 };
 
-function LinearProgressWithLabel(props: LinearProgressProps & TrustLevelRequireVisualData) {
-  const calResult = (
-    v: number,
-    rv: number,
-    cc: string,
-  ): {
-    color: 'success' | 'error' | 'primary';
-    pv: number;
-    label: string;
-  } => {
-    let pv = v;
-    if (rv === 0) {
-      pv = v * 100;
-    } else {
-      pv = (v / rv) * 100;
-    }
-    pv = pv > 100 ? 100 : pv;
-
-    if (cc === '>=') {
-      return pv < 100
-        ? { color: 'error', pv, label: `${v} < ${rv}，未达标` }
-        : { color: 'success', pv, label: `${v} ≥ ${rv}，已达标` };
-    }
-    if (cc === '<=') {
-      return pv > 100
-        ? { color: 'error', pv, label: `${v} > ${rv}，未达标` }
-        : { color: 'success', pv, label: `${v} ≤ ${rv}，已达标` };
-    }
-
-    return { color: 'primary', pv, label: `${v} / ${rv}，未知` };
-  };
-
-  const { title, value, requireValue, calc, ...restProps } = props;
-  const result = calResult(value, requireValue, calc);
+function LinearProgressWithLabel(
+  props: Omit<LinearProgressProps, 'value' | 'color' | 'label'> & TrustLevelRequireProgressData,
+) {
+  const { title, color, value, label, ...restProps } = props;
 
   return (
     <LinearProgress
       {...restProps}
-      value={result.pv}
-      color={result.color}
+      value={value}
+      color={color}
       variant="gradient"
       label
-      labelColor={result.color}
-      labelText={`${title}：${result.label}`}
+      labelColor={color}
+      labelText={`${title}：${label}`}
     />
   );
 }
@@ -109,7 +47,7 @@ function LinearProgressWithLabel(props: LinearProgressProps & TrustLevelRequireV
 function TrustLevelDialog({ open = false, toggleOpen }: TrustLevelDialogProps) {
   const connectLinuxDoIframeRef = useRef<HTMLIFrameElement>(null);
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
-  const [trustLevelData, setTrustLevelData] = useState<TrustLevelRequireVisualData[]>([]);
+  const [trustLevelData, setTrustLevelData] = useState<TrustLevelRequireProgressData[]>([]);
 
   const extractValue = (value: string): number => {
     if (value.includes('%')) {
@@ -138,6 +76,34 @@ function TrustLevelDialog({ open = false, toggleOpen }: TrustLevelDialogProps) {
     return '>=';
   };
 
+  const transToProgressData = (
+    title: string,
+    value: number,
+    requireValue: number,
+    calc: string,
+  ): TrustLevelRequireProgressData => {
+    let newValue = value;
+    if (requireValue === 0) {
+      newValue = value * 100;
+    } else {
+      newValue = (value / requireValue) * 100;
+    }
+    newValue = newValue > 100 ? 100 : newValue;
+
+    if (calc === '>=') {
+      return newValue < 100
+        ? { title, color: 'error', value: newValue, label: `${value} < ${requireValue}，未达标` }
+        : { title, color: 'success', value: newValue, label: `${value} ≥ ${requireValue}，已达标` };
+    }
+    if (calc === '<=') {
+      return newValue > 100
+        ? { title, color: 'error', value: newValue, label: `${value} > ${requireValue}，未达标` }
+        : { title, color: 'success', value: newValue, label: `${value} ≤ ${requireValue}，已达标` };
+    }
+
+    return { title, color: 'primary', value: newValue, label: `${value} / ${requireValue}，未知` };
+  };
+
   useEffect(() => {
     const transformStats = (
       items: {
@@ -146,90 +112,15 @@ function TrustLevelDialog({ open = false, toggleOpen }: TrustLevelDialogProps) {
         requireValue: string;
         calc?: string;
       }[],
-    ): TrustLevelRequireVisualData[] => {
+    ): TrustLevelRequireProgressData[] => {
       return items.map(item => {
         const value = extractValue(item.value);
         const requireValue = extractRequireValue(item.requireValue);
         const calc = determineCalc(item.title, item.value, item.requireValue);
+        const progressData = transToProgressData(item.title, value, requireValue, calc);
 
-        return {
-          title: item.title,
-          value,
-          requireValue,
-          calc,
-        };
+        return progressData;
       });
-    };
-
-    const connectLinuxDoListener = (e: MessageEvent<any>) => {
-      if (lodashHas(e.data, 'allBannedUserRequire')) {
-        const { data: leveltrustRequireData }: { data: TrustLevelRequireData } = e;
-        const ltList = [
-          {
-            title: '访问次数',
-            value: leveltrustRequireData.visitCount,
-            requireValue: leveltrustRequireData.visitCountRequire,
-          },
-          {
-            title: '回复的话题',
-            value: leveltrustRequireData.repliedTopic,
-            requireValue: leveltrustRequireData.repliedTopicRequire,
-          },
-          {
-            title: '浏览的话题',
-            value: leveltrustRequireData.viewedTopic,
-            requireValue: leveltrustRequireData.viewedTopicRequire,
-          },
-          {
-            title: '浏览的话题（所有时间）',
-            value: leveltrustRequireData.viewedTopicAll,
-            requireValue: leveltrustRequireData.viewedTopicAllRequire,
-          },
-          {
-            title: '已读帖子',
-            value: leveltrustRequireData.viewedPost,
-            requireValue: leveltrustRequireData.viewedPostRequire,
-          },
-          {
-            title: '已读帖子（所有时间）',
-            value: leveltrustRequireData.viewedPostAll,
-            requireValue: leveltrustRequireData.viewedPostAllRequire,
-          },
-          {
-            title: '被举报的帖子',
-            value: leveltrustRequireData.reportedPost,
-            requireValue: leveltrustRequireData.reportedPostRequire,
-          },
-          {
-            title: '发起举报的用户',
-            value: leveltrustRequireData.reportedUser,
-            requireValue: leveltrustRequireData.reportedUserRequire,
-          },
-          { title: '点赞', value: leveltrustRequireData.likes, requireValue: leveltrustRequireData.likesRequire },
-          { title: '获赞', value: leveltrustRequireData.liked, requireValue: leveltrustRequireData.likedRequire },
-          {
-            title: '获赞：单日最高数量',
-            value: leveltrustRequireData.likedTopSingleDay,
-            requireValue: leveltrustRequireData.likedTopSingleDayRequire,
-          },
-          {
-            title: '获赞：点赞用户数量',
-            value: leveltrustRequireData.likedUser,
-            requireValue: leveltrustRequireData.likedUserRequire,
-          },
-          {
-            title: '被禁言（过去6个月）',
-            value: leveltrustRequireData.postBanned,
-            requireValue: leveltrustRequireData.postBannedRequire,
-          },
-          {
-            title: '被封禁（过去6个月）',
-            value: leveltrustRequireData.allBannedUser,
-            requireValue: leveltrustRequireData.allBannedUserRequire,
-          },
-        ];
-        setTrustLevelData(transformStats(ltList));
-      }
     };
 
     const username = getPreloadedUsername();
@@ -238,16 +129,15 @@ function TrustLevelDialog({ open = false, toggleOpen }: TrustLevelDialogProps) {
       fetchUserProfile(username, csrfToken).then(res => {
         setUserProfile(res);
         if (res.user.trust_level >= 2) {
-          window.addEventListener('message', connectLinuxDoListener);
+          fetchRealTrustLevelInfo().then((trustLevelRawData) => {
+            const transformedData = transformStats(trustLevelRawData as TrustLevelRequireRawData[]);
+            setTrustLevelData(transformedData);
+          });
         }
       });
     }
 
-    return () => {
-      if (connectLinuxDoListener) {
-        window.removeEventListener('message', connectLinuxDoListener);
-      }
-    };
+    return () => {};
   }, []);
 
   return (
@@ -260,29 +150,14 @@ function TrustLevelDialog({ open = false, toggleOpen }: TrustLevelDialogProps) {
               <Typography variant="body1">
                 {`你的用户等级为${userProfile.user.trust_level}级，精确信息通过 connect.linux.do 查询`}
               </Typography>
-
-              <iframe
-                title="levelTrustInfo"
-                ref={connectLinuxDoIframeRef}
-                style={{
-                  width: 0,
-                  height: 0,
-                  overflow: 'hidden',
-                  border: 'none',
-                  borderRadius: '0.5rem',
-                  display: 'hidden',
-                }}
-                // style={{ width: '100%', height: '800px', overflow: 'visible', border: 'none', borderRadius: '0.5rem' }}
-                src="https://connect.linux.do/"
-              />
               {trustLevelData.length > 0 ? (
                 trustLevelData.map(ltd => (
                   <LinearProgressWithLabel
                     key={lodashUniqueId('tlProcess')}
                     title={ltd.title}
                     value={ltd.value}
-                    requireValue={ltd.requireValue}
-                    calc={ltd.calc}
+                    label={ltd.label}
+                    color={ltd.color}
                   />
                 ))
               ) : (
@@ -312,13 +187,18 @@ function TrustLevelDialog({ open = false, toggleOpen }: TrustLevelDialogProps) {
           ))}
       </DialogContent>
       <DialogActions>
-        <Tooltip title="点击跳转 2024.03.19 更新说明" placement="top">
+        <Tooltip title="点击跳转 2024.03.22 更新说明" placement="top">
           <Button
             color="error"
             variant="text"
-            onClick={() => window.open('https://linux.do/t/topic/35204?u=delph1s#h-2024-03-19-7', '_blank')}
+            onClick={() => window.open('https://linux.do/t/topic/35204#h-2024-03-22-9', '_blank')}
           >
             一直无法显示？
+          </Button>
+        </Tooltip>
+        <Tooltip title="点击跳转 2024.03.22 更新说明" placement="top">
+          <Button color="success" variant="text" onClick={() => window.open('https://connect.linux.do/', '_blank')}>
+            被始皇 Ban 了就跳转官方吧
           </Button>
         </Tooltip>
         <Button color="info" onClick={() => toggleOpen(false)}>

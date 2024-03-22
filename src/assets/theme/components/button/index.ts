@@ -107,13 +107,77 @@ export const button = (
     };
 
     const colorStyle = CoreColors.map(color => ({
-
+      ...(color === ownerState.color && {
+        ...(containedVariant && {
+          backgroundColor: theme.palette[color].main,
+          '&:hover': {
+            backgroundColor: theme.palette[color].main,
+          },
+          '&:focus:not(:hover)': {
+            backgroundColor: theme.palette[color].focus,
+          },
+        }),
+        ...(outlinedVariant && {
+          backgroundColor: transparent.main,
+          borderColor: theme.palette[color].main,
+          '&:hover': {
+            backgroundColor: transparent.main,
+          },
+        }),
+        ...(textVariant && {
+          color: theme.palette[color].main,
+          '&:hover': {
+            color: theme.palette[color].main,
+          },
+          '&:focus:not(:hover)': {
+            color: theme.palette[color].focus,
+            boxShadow: 'none',
+          },
+        }),
+      }),
     }));
 
-    return [
-      defaultStyle,
-      variantStyle,
-    ];
+    const sizeStyle = {
+      ...(smallSize && {
+        ...((containedVariant || textVariant) && {
+          minHeight: pxToRem(isLight ? 32 : 29),
+          padding: `${pxToRem(6)} ${pxToRem(isLight ? 16 : 18)}`,
+          fontSize: size.xs,
+          '& .material-icon, .material-icons-round, svg': {
+            fontSize: `${pxToRem(12)} !important`,
+          },
+        }),
+        ...(outlinedVariant && {
+          minHeight: pxToRem(isLight ? 32 : 31),
+          padding: `${pxToRem(6)} ${pxToRem(isLight ? 16 : 18)}`,
+          fontSize: size.xs,
+          '& .material-icon, .material-icons-round, svg': {
+            fontSize: `${pxToRem(12)} !important`,
+          },
+        }),
+      }),
+      // ...(mediumSize && {}),
+      ...(largeSize && {
+        ...((containedVariant || textVariant) && {
+          minHeight: pxToRem(isLight ? 47 : 44),
+          padding: `${pxToRem(12)} ${pxToRem(isLight ? 28 : 24)}`,
+          fontSize: size.sm,
+          '& .material-icon, .material-icons-round, svg': {
+            fontSize: `${pxToRem(22)} !important`,
+          },
+        }),
+        ...(outlinedVariant && {
+          minHeight: pxToRem(isLight ? 47 : 46),
+          padding: `${pxToRem(12)} ${pxToRem(isLight ? 28 : 24)}`,
+          fontSize: size.sm,
+          '& .material-icon, .material-icons-round, svg': {
+            fontSize: `${pxToRem(22)} !important`,
+          },
+        }),
+      }),
+    };
+
+    return [defaultStyle, variantStyle, ...colorStyle, sizeStyle];
   };
 
   return {
@@ -128,259 +192,9 @@ export const button = (
       },
       styleOverrides: {
         root: ({ ownerState }: { ownerState: ButtonProps }) => rootStyle(ownerState),
-        contained: {
-          // [`&.${buttonClasses.contained}.${buttonClasses.colorInherit}`]: {},
-          [`&.${buttonClasses.contained}.${buttonClasses.colorPrimary}`]: {
-            backgroundColor: primary.main,
-
-            '&:hover': {
-              backgroundColor: primary.main,
-            },
-
-            '&:focus:not(:hover)': {
-              backgroundColor: primary.focus,
-            },
-          },
-          [`&.${buttonClasses.contained}.${buttonClasses.colorSecondary}`]: {
-            backgroundColor: secondary.main,
-
-            '&:hover': {
-              backgroundColor: secondary.main,
-            },
-
-            '&:focus:not(:hover)': {
-              backgroundColor: secondary.focus,
-            },
-          },
-          [`&.${buttonClasses.contained}.${buttonClasses.colorError}`]: {
-            backgroundColor: error.main,
-
-            '&:hover': {
-              backgroundColor: error.main,
-            },
-
-            '&:focus:not(:hover)': {
-              backgroundColor: error.focus,
-            },
-          },
-          [`&.${buttonClasses.contained}.${buttonClasses.colorWarning}`]: {
-            backgroundColor: warning.main,
-
-            '&:hover': {
-              backgroundColor: warning.main,
-            },
-
-            '&:focus:not(:hover)': {
-              backgroundColor: warning.focus,
-            },
-          },
-          [`&.${buttonClasses.contained}.${buttonClasses.colorSuccess}`]: {
-            backgroundColor: success.main,
-
-            '&:hover': {
-              backgroundColor: success.main,
-            },
-
-            '&:focus:not(:hover)': {
-              backgroundColor: success.focus,
-            },
-          },
-          [`&.${buttonClasses.contained}.${buttonClasses.colorInfo}`]: {
-            backgroundColor: info.main,
-
-            '&:hover': {
-              backgroundColor: info.main,
-            },
-
-            '&:focus:not(:hover)': {
-              color: info.focus,
-            },
-          },
-          [`&.${buttonClasses.contained}.${buttonClasses.sizeSmall}`]: {
-            minHeight: pxToRem(isLight ? 32 : 29),
-            padding: `${pxToRem(6)} ${pxToRem(isLight ? 16 : 18)}`,
-            fontSize: size.xs,
-
-            '& .material-icon, .material-icons-round, svg': {
-              fontSize: `${pxToRem(12)} !important`,
-            },
-          },
-          // [`&.${buttonClasses.contained}.${buttonClasses.sizeMedium}`]: {},
-          [`&.${buttonClasses.contained}.${buttonClasses.sizeLarge}`]: {
-            minHeight: pxToRem(isLight ? 47 : 44),
-            padding: `${pxToRem(12)} ${pxToRem(isLight ? 28 : 24)}`,
-            fontSize: size.sm,
-
-            '& .material-icon, .material-icons-round, svg': {
-              fontSize: `${pxToRem(22)} !important`,
-            },
-          },
-        },
-
-        outlined: {
-          //   [`&.${buttonClasses.outlined}.${buttonClasses.colorInherit}`]: {},
-          [`&.${buttonClasses.outlined}.${buttonClasses.colorPrimary}`]: {
-            backgroundColor: transparent.main,
-            borderColor: primary.main,
-
-            '&:hover': {
-              backgroundColor: transparent.main,
-            },
-          },
-          [`&.${buttonClasses.outlined}.${buttonClasses.colorSecondary}`]: {
-            backgroundColor: transparent.main,
-            borderColor: secondary.main,
-
-            '&:hover': {
-              backgroundColor: transparent.main,
-            },
-          },
-          [`&.${buttonClasses.outlined}.${buttonClasses.colorError}`]: {
-            backgroundColor: transparent.main,
-            borderColor: error.main,
-
-            '&:hover': {
-              backgroundColor: transparent.main,
-            },
-          },
-          [`&.${buttonClasses.outlined}.${buttonClasses.colorWarning}`]: {
-            backgroundColor: transparent.main,
-            borderColor: warning.main,
-
-            '&:hover': {
-              backgroundColor: transparent.main,
-            },
-          },
-          [`&.${buttonClasses.outlined}.${buttonClasses.colorSuccess}`]: {
-            backgroundColor: transparent.main,
-            borderColor: success.main,
-
-            '&:hover': {
-              backgroundColor: transparent.main,
-            },
-          },
-          [`&.${buttonClasses.outlined}.${buttonClasses.colorInfo}`]: {
-            backgroundColor: transparent.main,
-            borderColor: info.main,
-
-            '&:hover': {
-              backgroundColor: transparent.main,
-            },
-          },
-          [`&.${buttonClasses.outlined}.${buttonClasses.sizeSmall}`]: {
-            minHeight: pxToRem(isLight ? 32 : 31),
-            padding: `${pxToRem(6)} ${pxToRem(isLight ? 16 : 18)}`,
-            fontSize: size.xs,
-
-            '& .material-icon, .material-icons-round, svg': {
-              fontSize: `${pxToRem(12)} !important`,
-            },
-          },
-          //   [`&.${buttonClasses.outlined}.${buttonClasses.sizeMedium}`]: {},
-          [`&.${buttonClasses.outlined}.${buttonClasses.sizeLarge}`]: {
-            minHeight: pxToRem(isLight ? 47 : 46),
-            padding: `${pxToRem(12)} ${pxToRem(isLight ? 28 : 24)}`,
-            fontSize: size.sm,
-
-            '& .material-icon, .material-icons-round, svg': {
-              fontSize: `${pxToRem(22)} !important`,
-            },
-          },
-        },
-        text: {
-          // [`&.${buttonClasses.text}.${buttonClasses.colorInherit}`]: {},
-          [`&.${buttonClasses.text}.${buttonClasses.colorPrimary}`]: {
-            color: primary.main,
-
-            '&:hover': {
-              color: primary.main,
-            },
-
-            '&:focus:not(:hover)': {
-              color: primary.focus,
-              boxShadow: 'none',
-            },
-          },
-          [`&.${buttonClasses.text}.${buttonClasses.colorSecondary}`]: {
-            color: secondary.main,
-
-            '&:hover': {
-              color: secondary.main,
-            },
-
-            '&:focus:not(:hover)': {
-              color: secondary.focus,
-              boxShadow: 'none',
-            },
-          },
-          [`&.${buttonClasses.text}.${buttonClasses.colorError}`]: {
-            color: error.main,
-
-            '&:hover': {
-              color: error.main,
-            },
-
-            '&:focus:not(:hover)': {
-              color: error.focus,
-              boxShadow: 'none',
-            },
-          },
-          [`&.${buttonClasses.text}.${buttonClasses.colorWarning}`]: {
-            color: warning.main,
-
-            '&:hover': {
-              color: warning.main,
-            },
-
-            '&:focus:not(:hover)': {
-              color: warning.focus,
-              boxShadow: 'none',
-            },
-          },
-          [`&.${buttonClasses.text}.${buttonClasses.colorSuccess}`]: {
-            color: success.main,
-
-            '&:hover': {
-              color: success.main,
-            },
-
-            '&:focus:not(:hover)': {
-              color: success.focus,
-              boxShadow: 'none',
-            },
-          },
-          [`&.${buttonClasses.text}.${buttonClasses.colorInfo}`]: {
-            color: info.main,
-
-            '&:hover': {
-              color: info.main,
-            },
-
-            '&:focus:not(:hover)': {
-              color: info.focus,
-              boxShadow: 'none',
-            },
-          },
-          [`&.${buttonClasses.text}.${buttonClasses.sizeSmall}`]: {
-            minHeight: pxToRem(isLight ? 32 : 29),
-            padding: `${pxToRem(6)} ${pxToRem(isLight ? 16 : 18)}`,
-            fontSize: size.xs,
-
-            '& .material-icon, .material-icons-round, svg': {
-              fontSize: `${pxToRem(12)} !important`,
-            },
-          },
-          // [`&.${buttonClasses.text}.${buttonClasses.sizeMedium}`]: {},
-          [`&.${buttonClasses.text}.${buttonClasses.sizeLarge}`]: {
-            minHeight: pxToRem(isLight ? 47 : 44),
-            padding: `${pxToRem(12)} ${pxToRem(isLight ? 28 : 24)}`,
-            fontSize: size.sm,
-
-            '& .material-icon, .material-icons-round, svg': {
-              fontSize: `${pxToRem(22)} !important`,
-            },
-          },
-        },
+        // contained: {},
+        // outlined: {},
+        // text: {},
         // icon: {
         //   [`&.${buttonClasses.sizeSmall} > .${buttonClasses.icon}`]: {},
         //   [`&.${buttonClasses.sizeMedium} > .${buttonClasses.icon}`]: {},

@@ -1,4 +1,3 @@
-import { ButtonColorSchema } from '@assets/theme/components/button/types';
 import {
   BoxShadowFunction,
   HexToRgbFunction,
@@ -14,9 +13,19 @@ import { ButtonProps as MuiButtonProps } from '@mui/material/Button';
 declare module '@mui/material/Button' {
   interface ButtonPropsColorOverrides {
     inherit: false;
-    [K: ButtonColorSchema]: true;
+    white: true;
+    primary: true;
+    secondary: true;
+    info: true;
+    success: true;
+    warning: true;
+    error: true;
+    light: true;
+    dark: true;
   }
+
   interface ButtonPropsSizeOverrides {}
+
   interface ButtonPropsVariantOverrides {
     gradient: true;
   }

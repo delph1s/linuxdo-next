@@ -1,4 +1,3 @@
-import { ThemeColorSchema } from '@assets/theme/vars/types';
 import type { ButtonOwnerStateType } from '@components/button/mui-button/types';
 import { filterForwardProps } from '@core/utils/filters';
 import Button, { ButtonProps } from '@mui/material/Button';
@@ -15,7 +14,7 @@ const ButtonRoot = styled(Button, {
   const { palette, functions, borders, boxShadows } = theme;
   const { variant, size, circular, iconOnly } = ownerState;
   const color = ownerState.color || 'primary';
-  const darkMode = theme.palette.mode;
+  const darkMode = theme.palette.mode === 'dark';
 
   const { white, text, transparent, gradients, grey } = palette;
   const { boxShadow, linearGradient, pxToRem, rgba } = functions;
@@ -25,10 +24,10 @@ const ButtonRoot = styled(Button, {
   // styles for the button with variant="contained"
   const containedStyles = () => {
     // background color value
-    const backgroundValue = palette[color] ? palette[color].main : white.main;
+    const backgroundValue = lodashHas(palette, color) ? palette[color].main : white.main;
 
     // backgroundColor value when button is focused
-    const focusedBackgroundValue = palette[color] ? palette[color].focus : white.focus;
+    const focusedBackgroundValue = lodashHas(palette, color) ? palette[color].focus : white.focus;
 
     // boxShadow value
     const boxShadowValue = lodashHas(colored, color)

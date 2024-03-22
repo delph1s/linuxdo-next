@@ -35,7 +35,9 @@ export default defineConfig({
         // exclude: [],
         // require: [],
         // resource: {},
-        // connect: [],
+        connect: [
+          'connect.linux.do',
+        ],
         // sandbox: 'raw',
         // antifeature: [],
         // noframes: false,
@@ -49,7 +51,10 @@ export default defineConfig({
         // compatible: '',
         // incompatible: '',
         'run-at': 'document-end',
-        // grant: [],
+        grant: [
+          'GM_cookie',
+          'GM_xmlhttpRequest',
+        ],
       },
       // format: {
       //   generate: uOptions => {
@@ -65,9 +70,9 @@ export default defineConfig({
       //     }
       //   }
       // },
-      clientAlias: 'monkeyClient',
+      // clientAlias: 'monkeyClient',
       server: {
-        open: true,
+        open: false,
         prefix: name => {
           return `${name}-dev`;
         },
