@@ -12,7 +12,7 @@ import Tooltip from '@mui/material/Tooltip';
 import { UserProfile } from '@server/user/types';
 import { fetchRealTrustLevelInfo, fetchUserProfile, TrustLevelRequireRawData } from '@src/server';
 import lodashUniqueId from 'lodash/uniqueId';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 type TrustLevelRequireProgressData = {
   title: string;
@@ -45,7 +45,6 @@ function LinearProgressWithLabel(
 }
 
 function TrustLevelDialog({ open = false, toggleOpen }: TrustLevelDialogProps) {
-  const connectLinuxDoIframeRef = useRef<HTMLIFrameElement>(null);
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [trustLevelData, setTrustLevelData] = useState<TrustLevelRequireProgressData[]>([]);
 

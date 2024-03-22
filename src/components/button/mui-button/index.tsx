@@ -17,31 +17,15 @@ const Button = forwardRef(
     }: ButtonProps,
     ref: ButtonProps['ref'],
   ) => {
-    const getColor = (rawColor: ButtonProps['color']): MuiButtonProps['color'] => {
-      const validColors: MuiButtonProps['color'][] = [
-        'white',
-        'primary',
-        'secondary',
-        'info',
-        'success',
-        'warning',
-        'error',
-        'dark',
-        'light',
-      ];
-      return validColors.includes(rawColor as MuiButtonProps['color'])
-        ? (rawColor as MuiButtonProps['color'])
-        : 'primary';
-    };
 
     return (
       <ButtonRoot
         {...restProps}
         ref={ref}
-        color={getColor(color)}
-        variant={variant === 'gradient' ? 'contained' : variant}
+        color={color}
+        variant={variant}
         size={size}
-        ownerState={{ color, variant, size, circular, iconOnly }}
+        ownerState={{ size, circular, iconOnly }}
       >
         {children}
       </ButtonRoot>

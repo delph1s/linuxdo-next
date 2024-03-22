@@ -7,8 +7,6 @@ export type ButtonProps = Merge<MuiButtonProps, {
 }>;
 
 export type ButtonOwnerStateType = {
-  color?: ButtonProps['color'];
-  variant?: ButtonProps['variant'];
   size?: ButtonProps['size'];
   circular?: ButtonProps['circular'];
   iconOnly?: ButtonProps['iconOnly'];

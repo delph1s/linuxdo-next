@@ -18,7 +18,7 @@ function App() {
   return (
     <div className={styles.pandoraButton}>
       <ThemeProvider>
-        <PandoraButton openPandora={openPandora} onClick={() => toggleOpenPandora()} />
+        <PandoraButton color='info' variant='gradient' openPandora={openPandora} onClick={() => toggleOpenPandora()} />
         <PandoraDrawer openDrawer={openPandora} handleCloseDrawer={handleClosePandora} />
       </ThemeProvider>
     </div>
