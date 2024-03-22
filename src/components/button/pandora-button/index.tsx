@@ -13,7 +13,6 @@ function PandoraButton({ openPandora = false, pandoraButtonPosition = 'right', .
   const visibleTimeout = useRef<NodeJS.Timeout>();
   const [visible, setVisible] = useState(false);
 
-
   // 鼠标悬停和离开事件处理
   const handleMouseEnter = () => {
     clearTimeout(visibleTimeout.current);

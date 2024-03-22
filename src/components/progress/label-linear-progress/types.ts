@@ -5,14 +5,13 @@ import { Merge } from 'type-fest';
 
 export type LinearProgressOwnerStateType = {
   color: ThemeColorSchema;
-  value: number;
+  value: MuiLinearProgressProps['value'];
   variant: 'contained' | 'gradient';
 };
 
 export type LinearProgressProps = Merge<MuiLinearProgressProps, {
   variant?: LinearProgressOwnerStateType['variant'];
   color?: LinearProgressOwnerStateType['color'];
-  value: number;
   label?: boolean;
   labelColor?: TypographyProps['color'];
   labelText?: string;

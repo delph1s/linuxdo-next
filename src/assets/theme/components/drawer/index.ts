@@ -1,6 +1,6 @@
 import { MuiThemeOptionsComponents } from '@assets/theme/vars/mui';
 // import { drawerClasses, DrawerProps } from '@mui/material/Drawer';
-import { alpha, Theme } from '@mui/material/styles';
+import { Theme } from '@mui/material/styles';
 
 export const drawer = (
   theme: Theme,

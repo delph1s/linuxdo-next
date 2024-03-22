@@ -1,5 +1,5 @@
-import LinearProgressRoot from '@components/progress/mui-linear-progress/styles/root';
-import { LinearProgressProps } from '@components/progress/mui-linear-progress/types';
+import LinearProgressRoot from '@components/progress/label-linear-progress/styles/root';
+import { LinearProgressProps } from '@components/progress/label-linear-progress/types';
 import Typography from '@components/typography/mui-typography';
 import React from 'react';
 

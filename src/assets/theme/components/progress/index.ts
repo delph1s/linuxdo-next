@@ -1,7 +1,7 @@
 import { MuiThemeOptionsComponents } from '@assets/theme/vars/mui';
 // import { circularProgressClasses } from '@mui/material/CircularProgress';
-// import { linearProgressClasses } from '@mui/material/LinearProgress';
-import { alpha, Theme } from '@mui/material/styles';
+// import { linearProgressClasses, LinearProgressProps } from '@mui/material/LinearProgress';
+import { CSSInterpolation, Theme } from '@mui/material/styles';
 
 export const progress = (
   theme: Theme,
@@ -25,8 +25,8 @@ export const progress = (
         root: {
           height: pxToRem(6),
           borderRadius: borderRadius.md,
-          overflow: "visible",
-          position: "relative",
+          overflow: 'visible',
+          position: 'relative',
         },
         colorPrimary: {
           backgroundColor: light.main,
@@ -37,9 +37,9 @@ export const progress = (
         bar: {
           height: pxToRem(6),
           borderRadius: borderRadius.sm,
-          position: "absolute",
+          position: 'absolute',
           transform: `translate(0, 0) !important`,
-          transition: "width 0.6s ease !important",
+          transition: 'width 0.6s ease !important',
         },
       },
     },

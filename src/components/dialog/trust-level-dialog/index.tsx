@@ -1,6 +1,6 @@
 import Button from '@components/button/mui-button';
-import LinearProgress from '@components/progress/mui-linear-progress';
-import { LinearProgressProps } from '@components/progress/mui-linear-progress/types';
+import LinearProgress from '../../progress/label-linear-progress';
+import { LinearProgressProps } from '@components/progress/label-linear-progress/types';
 import Typography from '@components/typography/mui-typography';
 import { getCsrfToken, getPreloadedUsername } from '@core/dom';
 import Dialog from '@mui/material/Dialog';
@@ -195,9 +195,9 @@ function TrustLevelDialog({ open = false, toggleOpen }: TrustLevelDialogProps) {
             一直无法显示？
           </Button>
         </Tooltip>
-        <Tooltip title="点击跳转 2024.03.22 更新说明" placement="top">
-          <Button color="success" variant="text" onClick={() => window.open('https://connect.linux.do/', '_blank')}>
-            被始皇 Ban 了就跳转官方吧
+        <Tooltip title="被始皇 Ban 了应急就跳转官方吧" placement="top">
+          <Button color="warning" variant="text" onClick={() => window.open('https://connect.linux.do/', '_blank')}>
+            跳转官方
           </Button>
         </Tooltip>
         <Button color="info" onClick={() => toggleOpen(false)}>

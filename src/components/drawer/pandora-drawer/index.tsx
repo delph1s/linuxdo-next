@@ -1,10 +1,14 @@
 import Button from '@components/button/mui-button';
 import { PandoraButtonPosition } from '@components/button/pandora-button/types';
+import Box from '@components/layout/box/mui-box';
+import Typography from '@components/typography/mui-typography';
 import { uiConfig } from '@config/ui';
 import { getCsrfToken, getPreloadedUsername } from '@core/dom';
+import { useSettingsContext } from '@core/hooks/useSettingsContext';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { Box } from '@mui/material';
+import Divider from '@mui/material/Divider';
 import { useTheme } from '@mui/material/styles';
+import Switch from '@mui/material/Switch';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { fetchForumAbout, fetchGetInvites, fetchUpdateInvite } from '@src/server';
 import lodashClone from 'lodash/clone';
@@ -26,6 +30,7 @@ function PandoraDrawer({
   ...restProps
 }: PandoraDrawerProps) {
   const theme = useTheme();
+  const settings = useSettingsContext();
   const matches = useMediaQuery(theme.breakpoints.up('sm'));
   const forceStop = useRef<boolean>(false);
   const [isFetching, setIsFetching] = useState<boolean>(false);
@@ -111,28 +116,46 @@ function PandoraDrawer({
       openPandora={openDrawer}
       drawerPosition={drawerPosition}
     >
-      <Box component="div" sx={{ width: 'calc(280px - 1rem)', m: '0.5rem' }}>
-        <LoadingButton variant="gradient" loading={isFetching} onClick={() => handleModifyInvitesExpiredTime()}>
-          一键修改邀请时限
-        </LoadingButton>
-        <Button
-          color="info"
-          disabled={!isFetching}
-          onClick={() => {
-            forceStop.current = true;
-          }}
-        >
-          停止修改邀请时限
-        </Button>
-        <br />
-        <LoadingButton variant="gradient" loading={isFetching} onClick={() => handleGetForumAbout()}>
-          获取 linux.do 论坛统计数据
-        </LoadingButton>
-        <br />
-        <Button color="info" disabled={isFetching} onClick={() => handleToggleLevelInfoDialog(true)}>
-          查看等级数据
-        </Button>
-        <TrustLevelDialog open={levelInfoOpen} toggleOpen={handleToggleLevelInfoDialog} />
+      <Box pt={0.5} pb={3} px={3}>
+        <Box mb={2} display="flex" justifyContent="space-between" alignItems="center" lineHeight={1}>
+          <Typography variant="h6">主题</Typography>
+          <Switch
+            checked={settings.themeMode === 'dark'}
+            onChange={(e, checked) => settings.onUpdate('themeMode', checked ? 'dark' : 'light')}
+          />
+        </Box>
+        <Divider />
+        <Box mb={2} display="flex" justifyContent="space-between" alignItems="center" lineHeight={1}>
+          <Typography variant="h6">邀请时限</Typography>
+          <LoadingButton variant="gradient" loading={isFetching} onClick={() => handleModifyInvitesExpiredTime()}>
+            一键修改邀请时限
+          </LoadingButton>
+          <Button
+            color="info"
+            disabled={!isFetching}
+            onClick={() => {
+              forceStop.current = true;
+            }}
+          >
+            停止修改邀请时限
+          </Button>
+        </Box>
+        <Divider />
+        <Box mb={2} display="flex" justifyContent="space-between" alignItems="center" lineHeight={1}>
+          <Typography variant="h6">等级</Typography>
+          <Button color="info" disabled={isFetching} onClick={() => handleToggleLevelInfoDialog(true)}>
+            查看等级数据
+          </Button>
+          <TrustLevelDialog open={levelInfoOpen} toggleOpen={handleToggleLevelInfoDialog} />
+        </Box>
+        <Divider />
+        <Box mb={2} display="flex" justifyContent="space-between" alignItems="center" lineHeight={1}>
+          <Typography variant="h6">论坛统计数据</Typography>
+          <LoadingButton variant="gradient" loading={isFetching} onClick={() => handleGetForumAbout()}>
+            获取 linux.do 论坛统计数据
+          </LoadingButton>
+        </Box>
+        <Divider />
       </Box>
     </StyledPandoraDrawer>
   );

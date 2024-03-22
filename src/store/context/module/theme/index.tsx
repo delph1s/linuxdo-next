@@ -8,9 +8,10 @@ import { borders } from '@assets/theme/vars/borders';
 import { boxShadows } from '@assets/theme/vars/boxShadows';
 import { breakpoints } from '@assets/theme/vars/breakpoints';
 import { palette } from '@assets/theme/vars/colors';
-import { GlobalStyles } from '@assets/theme/vars/globals';
+// import { GlobalStyles } from '@assets/theme/vars/globals';
 import type { ThemeMode } from '@assets/theme/vars/types';
 import { typography } from '@assets/theme/vars/typography';
+import { useSettingsContext } from '@core/hooks/useSettingsContext';
 // import CssBaseline from '@mui/material/CssBaseline';
 import type { ThemeOptions } from '@mui/material/styles';
 import { createTheme, ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
@@ -36,17 +37,17 @@ type ThemeProviderProps = {
 };
 
 function ThemeProvider({ children, ...restProps }: ThemeProviderProps) {
-  const settings = { themeMode: 'light' };
+  const settings = useSettingsContext();
   const themeModeOption = changeThemeMode(settings.themeMode as ThemeMode);
 
   // 基本配置
   const baseOption: ThemeOptions = useMemo(() => {
     return {
       breakpoints: { ...breakpoints },
-      palette: palette('dark'),
-      typography: typography('dark'),
-      boxShadows: boxShadows('dark'),
-      borders: borders('dark'),
+      palette: palette('light'),
+      typography: typography('light'),
+      boxShadows: boxShadows('light'),
+      borders: borders('light'),
       functions: {
         boxShadow,
         hexToRgb,
