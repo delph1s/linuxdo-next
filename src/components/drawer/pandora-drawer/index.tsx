@@ -151,14 +151,14 @@ function PandoraDrawer({
         <Divider />
         <Box mb={2} display="flex" justifyContent="space-between" alignItems="center" lineHeight={1}>
           <Typography variant="h6">论坛统计数据</Typography>
-          <LoadingButton color="info" variant="gradient" loading={isFetching} onClick={() => handleGetForumAbout()}>
+          <LoadingButton color="info" variant="gradient" loading={isFetching} onClick={() => handleGetForumAbout()} disabled>
             查看
           </LoadingButton>
         </Box>
         <Divider />
         <Box mb={2} display="flex" justifyContent="space-between" alignItems="center" lineHeight={1}>
           <Typography variant="h6">与佬友PK</Typography>
-          <LoadingButton color="info" variant="gradient" loading={isFetching} onClick={() => handleGetForumAbout()}>
+          <LoadingButton color="info" variant="gradient" loading={isFetching} onClick={() => {}} disabled>
             开P
           </LoadingButton>
         </Box>
