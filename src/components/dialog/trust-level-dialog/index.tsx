@@ -1,5 +1,4 @@
 import Button from '@components/button/mui-button';
-import LinearProgress from '../../progress/label-linear-progress';
 import { LinearProgressProps } from '@components/progress/label-linear-progress/types';
 import Typography from '@components/typography/mui-typography';
 import { getCsrfToken, getPreloadedUsername } from '@core/dom';
@@ -13,6 +12,8 @@ import { UserProfile } from '@server/user/types';
 import { fetchRealTrustLevelInfo, fetchUserProfile, TrustLevelRequireRawData } from '@src/server';
 import lodashUniqueId from 'lodash/uniqueId';
 import React, { useEffect, useState } from 'react';
+
+import LinearProgress from '../../progress/label-linear-progress';
 
 type TrustLevelRequireProgressData = {
   title: string;
@@ -128,10 +129,14 @@ function TrustLevelDialog({ open = false, toggleOpen }: TrustLevelDialogProps) {
       fetchUserProfile(username, csrfToken).then(res => {
         setUserProfile(res);
         if (res.user.trust_level >= 2) {
-          fetchRealTrustLevelInfo().then((trustLevelRawData) => {
+          fetchRealTrustLevelInfo().then(trustLevelRawData => {
             const transformedData = transformStats(trustLevelRawData as TrustLevelRequireRawData[]);
             setTrustLevelData(transformedData);
           });
+        } else if (res.user.trust_level === 1) {
+          // 等级 1 逻辑
+        } else {
+          // 等级 0 逻辑
         }
       });
     }
@@ -140,7 +145,7 @@ function TrustLevelDialog({ open = false, toggleOpen }: TrustLevelDialogProps) {
   }, []);
 
   return (
-    <Dialog fullWidth maxWidth="sm" open={open} onClose={() => toggleOpen(false)}>
+    <Dialog fullWidth maxWidth="sm" open={open} onClose={() => toggleOpen(false)} keepMounted={false}>
       <DialogTitle variant="h2">用户等级信息</DialogTitle>
       <DialogContent>
         {userProfile &&

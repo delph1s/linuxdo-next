@@ -1,8 +1,8 @@
 import { MuiThemeOptionsComponents } from '@assets/theme/vars/mui';
-import { alpha, Theme } from '@mui/material/styles';
+import { Theme } from '@mui/material/styles';
 import { switchClasses } from '@mui/material/Switch';
 
-export const progress = (
+export const switchButton = (
   theme: Theme,
 ): {
   MuiSwitch: MuiThemeOptionsComponents['MuiSwitch'];

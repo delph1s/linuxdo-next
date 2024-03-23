@@ -126,23 +126,23 @@ function PandoraDrawer({
         </Box>
         <Divider />
         <Box mb={2} display="flex" justifyContent="space-between" alignItems="center" lineHeight={1}>
-          <Typography variant="h6">邀请时限</Typography>
-          <LoadingButton variant="gradient" loading={isFetching} onClick={() => handleModifyInvitesExpiredTime()}>
-            一键修改邀请时限
+          <Typography variant="h6">修改邀请时限</Typography>
+          <LoadingButton color="info" variant="gradient" loading={isFetching} onClick={() => handleModifyInvitesExpiredTime()}>
+            修改
           </LoadingButton>
           <Button
-            color="info"
+            color="primary"
             disabled={!isFetching}
             onClick={() => {
               forceStop.current = true;
             }}
           >
-            停止修改邀请时限
+            停止
           </Button>
         </Box>
         <Divider />
         <Box mb={2} display="flex" justifyContent="space-between" alignItems="center" lineHeight={1}>
-          <Typography variant="h6">等级</Typography>
+          <Typography variant="h6">升级之路</Typography>
           <Button color="info" disabled={isFetching} onClick={() => handleToggleLevelInfoDialog(true)}>
             查看等级数据
           </Button>
@@ -151,11 +151,17 @@ function PandoraDrawer({
         <Divider />
         <Box mb={2} display="flex" justifyContent="space-between" alignItems="center" lineHeight={1}>
           <Typography variant="h6">论坛统计数据</Typography>
-          <LoadingButton variant="gradient" loading={isFetching} onClick={() => handleGetForumAbout()}>
-            获取 linux.do 论坛统计数据
+          <LoadingButton color="info" variant="gradient" loading={isFetching} onClick={() => handleGetForumAbout()}>
+            查看
           </LoadingButton>
         </Box>
         <Divider />
+        <Box mb={2} display="flex" justifyContent="space-between" alignItems="center" lineHeight={1}>
+          <Typography variant="h6">与佬友PK</Typography>
+          <LoadingButton color="info" variant="gradient" loading={isFetching} onClick={() => handleGetForumAbout()}>
+            开P
+          </LoadingButton>
+        </Box>
       </Box>
     </StyledPandoraDrawer>
   );
