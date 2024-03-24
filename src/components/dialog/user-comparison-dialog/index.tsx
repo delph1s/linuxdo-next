@@ -130,7 +130,6 @@ function UserComparisonDialog({ open, toggleOpen }: UserComparisonDialogProps) {
         const rightUserData = await fetchGetUserSummary(rightUser.username, csrfToken);
         const trimedUserSummaryData = trimUserSummaryData(leftUserData, rightUserData);
 
-        console.log(trimedUserSummaryData);
         setComparisonData(trimedUserSummaryData);
       }
     }
@@ -178,6 +177,13 @@ function UserComparisonDialog({ open, toggleOpen }: UserComparisonDialogProps) {
                     label: `添加"${inputValue}"`,
                     username: inputValue,
                   });
+                  setUserSuggestions(prevState => [
+                    {
+                      label: inputValue,
+                      username: inputValue,
+                    },
+                    ...userSuggestions,
+                  ]);
                 }
 
                 return filtered;
