@@ -8,7 +8,7 @@ import { borders } from '@assets/theme/vars/borders';
 import { boxShadows } from '@assets/theme/vars/boxShadows';
 import { breakpoints } from '@assets/theme/vars/breakpoints';
 import { palette } from '@assets/theme/vars/colors';
-// import { GlobalStyles } from '@assets/theme/vars/globals';
+import { GlobalStyles } from '@assets/theme/vars/globals';
 import type { ThemeMode } from '@assets/theme/vars/types';
 import { typography } from '@assets/theme/vars/typography';
 import { useSettingsContext } from '@core/hooks/useSettingsContext';
@@ -78,7 +78,7 @@ function ThemeProvider({ children, ...restProps }: ThemeProviderProps) {
   return (
     <MuiThemeProvider theme={theme}>
       {/* <CssBaseline /> */}
-      {/* <GlobalStyles /> */}
+      <GlobalStyles />
       {children}
     </MuiThemeProvider>
   );

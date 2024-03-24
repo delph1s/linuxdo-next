@@ -1,5 +1,6 @@
 import Button from '@components/button/mui-button';
 import { PandoraButtonPosition } from '@components/button/pandora-button/types';
+import UserComparisonDialog from '@components/dialog/user-comparison-dialog';
 import Box from '@components/layout/box/mui-box';
 import Typography from '@components/typography/mui-typography';
 import { uiConfig } from '@config/ui';
@@ -12,7 +13,7 @@ import Switch from '@mui/material/Switch';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { fetchForumAbout, fetchGetInvites, fetchUpdateInvite } from '@src/server';
 import lodashClone from 'lodash/clone';
-import React, { useRef, useState } from 'react';
+import React, { Dispatch, SetStateAction, useRef, useState } from 'react';
 
 import TrustLevelDialog from '../../dialog/trust-level-dialog';
 import { StyledPandoraDrawer } from './styles';
@@ -95,13 +96,22 @@ function PandoraDrawer({
     }
   };
 
+  const handleToggleOpen = (callback: Dispatch<SetStateAction<boolean>>, state?: boolean) => {
+    if (state === undefined) {
+      callback(prevState => !prevState);
+    } else {
+      callback(state);
+    }
+  };
+
   const [levelInfoOpen, setLevelInfoOpen] = useState<boolean>(false);
   const handleToggleLevelInfoDialog = (state?: boolean) => {
-    if (state === undefined) {
-      setLevelInfoOpen(prevState => !prevState);
-    } else {
-      setLevelInfoOpen(state);
-    }
+    handleToggleOpen(setLevelInfoOpen, state);
+  };
+
+  const [openPK, setOpenPK] = useState<boolean>(false);
+  const handleToggleUserComparisonDialog = (state?: boolean) => {
+    handleToggleOpen(setOpenPK, state);
   };
 
   return (
@@ -127,7 +137,12 @@ function PandoraDrawer({
         <Divider />
         <Box mb={2} display="flex" justifyContent="space-between" alignItems="center" lineHeight={1}>
           <Typography variant="h6">修改邀请时限</Typography>
-          <LoadingButton color="info" variant="gradient" loading={isFetching} onClick={() => handleModifyInvitesExpiredTime()}>
+          <LoadingButton
+            color="info"
+            variant="gradient"
+            loading={isFetching}
+            onClick={() => handleModifyInvitesExpiredTime()}
+          >
             修改
           </LoadingButton>
           <Button
@@ -151,16 +166,28 @@ function PandoraDrawer({
         <Divider />
         <Box mb={2} display="flex" justifyContent="space-between" alignItems="center" lineHeight={1}>
           <Typography variant="h6">论坛统计数据</Typography>
-          <LoadingButton color="info" variant="gradient" loading={isFetching} onClick={() => handleGetForumAbout()} disabled>
+          <LoadingButton
+            color="info"
+            variant="gradient"
+            loading={isFetching}
+            onClick={() => handleGetForumAbout()}
+            disabled
+          >
             查看
           </LoadingButton>
         </Box>
         <Divider />
         <Box mb={2} display="flex" justifyContent="space-between" alignItems="center" lineHeight={1}>
           <Typography variant="h6">与佬友PK</Typography>
-          <LoadingButton color="info" variant="gradient" loading={isFetching} onClick={() => {}} disabled>
+          <LoadingButton
+            color="info"
+            variant="gradient"
+            loading={isFetching}
+            onClick={() => handleToggleUserComparisonDialog(true)}
+          >
             开P
           </LoadingButton>
+          <UserComparisonDialog open={openPK} toggleOpen={handleToggleUserComparisonDialog} />
         </Box>
       </Box>
     </StyledPandoraDrawer>

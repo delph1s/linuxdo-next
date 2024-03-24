@@ -2,7 +2,7 @@ import { MuiThemeOptionsComponents } from '@assets/theme/vars/mui';
 // import { cardClasses } from '@mui/material/Card';
 // import { cardContentClasses } from '@mui/material/CardContent';
 // import { cardMediaClasses } from '@mui/material/CardMedia';
-import { alpha, Theme } from '@mui/material/styles';
+import { Theme } from '@mui/material/styles';
 
 export const card = (
   theme: Theme,

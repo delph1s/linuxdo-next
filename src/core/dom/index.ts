@@ -9,9 +9,12 @@ export const getCsrfToken = () => {
   return null;
 };
 
-type GetPreloadedDataType = () => null | any;
+type PreloadedDataType = {
+  currentUser: any;
+  topicTrackingStates: any;
+};
 
-export const getPreloadedData: GetPreloadedDataType = () => {
+export const getPreloadedData = (): PreloadedDataType | null => {
   const preloadedDataDom = qsOne('#data-preloaded');
   if (preloadedDataDom) {
     const preloadedStringData = preloadedDataDom.getAttribute('data-preloaded');
@@ -45,9 +48,7 @@ export const getPreloadedData: GetPreloadedDataType = () => {
   return null;
 };
 
-type GetPreloadedUsername = () => null | string;
-
-export const getPreloadedUsername = () => {
+export const getPreloadedUsername = (): string | null => {
   const preloadedData = getPreloadedData();
   if (preloadedData && preloadedData.currentUser) {
     const { username } = preloadedData.currentUser;

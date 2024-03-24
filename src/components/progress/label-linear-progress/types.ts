@@ -9,10 +9,14 @@ export type LinearProgressOwnerStateType = {
   variant: 'contained' | 'gradient';
 };
 
-export type LinearProgressProps = Merge<MuiLinearProgressProps, {
-  variant?: LinearProgressOwnerStateType['variant'];
-  color?: LinearProgressOwnerStateType['color'];
-  label?: boolean;
-  labelColor?: TypographyProps['color'];
-  labelText?: string;
-}>;
+export type LinearProgressProps = Merge<
+  MuiLinearProgressProps,
+  {
+    variant?: LinearProgressOwnerStateType['variant'];
+    color?: LinearProgressOwnerStateType['color'];
+    label?: boolean;
+    labelPosition?: 'top' | 'right' | 'left' | 'bottom';
+    labelColor?: TypographyProps['color'];
+    labelText?: string;
+  }
+>;

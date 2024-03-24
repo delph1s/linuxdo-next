@@ -8,13 +8,14 @@ function LinearProgress({
   color = 'info',
   value = 0,
   label = false,
+  labelPosition = 'top',
   labelColor = undefined,
   labelText = undefined,
   ...restProps
 }: LinearProgressProps) {
   return (
     <>
-      {label && (
+      {label && labelPosition === 'top' && (
         <Typography variant="button" fontWeight="medium" color={labelColor || 'text'}>
           {labelText || `${value}%`}
         </Typography>
