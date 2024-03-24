@@ -128,6 +128,24 @@ function UserComparisonDialog({ open, toggleOpen }: UserComparisonDialogProps) {
       if (leftUser && rightUser) {
         const leftUserData = await fetchGetUserSummary(leftUser.username, csrfToken);
         const rightUserData = await fetchGetUserSummary(rightUser.username, csrfToken);
+        if (leftUserData && !lodashSome(userSuggestions, ['username', leftUser.username])) {
+          setUserSuggestions(prevState => [
+            {
+              label: leftUser.username,
+              username: leftUser.username,
+            },
+            ...userSuggestions,
+          ]);
+        }
+        if (rightUserData && !lodashSome(userSuggestions, ['username', rightUser.username])) {
+          setUserSuggestions(prevState => [
+            {
+              label: rightUser.username,
+              username: rightUser.username,
+            },
+            ...userSuggestions,
+          ]);
+        }
         const trimedUserSummaryData = trimUserSummaryData(leftUserData, rightUserData);
 
         setComparisonData(trimedUserSummaryData);
@@ -177,13 +195,6 @@ function UserComparisonDialog({ open, toggleOpen }: UserComparisonDialogProps) {
                     label: `添加"${inputValue}"`,
                     username: inputValue,
                   });
-                  setUserSuggestions(prevState => [
-                    {
-                      label: inputValue,
-                      username: inputValue,
-                    },
-                    ...userSuggestions,
-                  ]);
                 }
 
                 return filtered;
