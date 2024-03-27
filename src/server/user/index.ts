@@ -216,9 +216,9 @@ export const fetchRealTrustLevelInfo = () => {
         accept:
           'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
         'accept-language': 'en-US,en-GB;q=0.9,en;q=0.8,zh-CN;q=0.7,zh;q=0.6',
-        'sec-ch-ua': '"Chromium";v="122", "Not(A:Brand";v="24", "Microsoft Edge";v="122"',
+        'sec-ch-ua': '"Chromium";v="999", "Not(A:Brand";v="24", "Microsoft Edge";v="999"',
         'sec-ch-ua-mobile': '?0',
-        'sec-ch-ua-platform': '"macOS"',
+        'sec-ch-ua-platform': '"linux"',
         'sec-fetch-dest': 'document',
         'sec-fetch-mode': 'navigate',
         'sec-fetch-site': 'none',

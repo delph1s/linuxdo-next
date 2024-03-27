@@ -45,6 +45,33 @@ function LinearProgressWithLabel(
   );
 }
 
+const summaryAttributes = [
+  { key: 'days_visited', title: '访问天数' },
+  { key: 'time_read', title: '阅读时间' },
+  { key: 'recent_time_read', title: '阅读时间（最近）' },
+  { key: 'topics_entered', title: '浏览的话题' },
+  { key: 'posts_read_count', title: '已读帖子' },
+  { key: 'likes_given', title: '已送出赞' },
+  { key: 'likes_received', title: '已收到赞' },
+  { key: 'topic_count', title: '创建的话题' },
+  { key: 'post_count', title: '创建的帖子' },
+  { key: 'solved_count', title: '解决数' },
+];
+
+const normalTrustLevelRequireData = {
+  0: { topics_entered: 5, posts_read_count: 30, time_read: 600 },
+  1: {
+    days_visited: 15,
+    likes_given: 1,
+    likes_received: 1,
+    post_count: 3,
+    topics_entered: 20,
+    posts_read_count: 100,
+    time_read: 3600,
+  },
+  2: { days_visited: 50, likes_given: 30, likes_received: 20, post_count: 10 },
+};
+
 function TrustLevelDialog({ open = false, toggleOpen }: TrustLevelDialogProps) {
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [trustLevelData, setTrustLevelData] = useState<TrustLevelRequireProgressData[]>([]);
@@ -154,6 +181,12 @@ function TrustLevelDialog({ open = false, toggleOpen }: TrustLevelDialogProps) {
               <Typography variant="body1">
                 {`你的用户等级为${userProfile.user.trust_level}级，精确信息通过 connect.linux.do 查询`}
               </Typography>
+              {userProfile.user.trust_level === 3 && (
+                <Typography variant="body2">你作为一个成熟的3级用户，应该学会和始皇达成py交易进阶4级了</Typography>
+              )}
+              {userProfile.user.trust_level === 4 && (
+                <Typography variant="body2">什么？你已经和始皇达成py交易了？</Typography>
+              )}
               {trustLevelData.length > 0 ? (
                 trustLevelData.map(ltd => (
                   <LinearProgressWithLabel
