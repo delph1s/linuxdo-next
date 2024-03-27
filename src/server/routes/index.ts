@@ -22,6 +22,7 @@ export const routes = {
     timing: `${baseRoutes.topics}/timings`, // 阅读计时
   },
   posts: {
-    post: (postID: number) => `${baseRoutes.posts}/${postID}.json`,
+    root: baseRoutes.posts,
+    detail: (postID: number) => `${baseRoutes.posts}/${postID}.json`,
   },
 };

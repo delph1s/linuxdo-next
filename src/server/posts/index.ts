@@ -1,5 +1,11 @@
-export const fetchGetPost = () => {
-  fetch('https://linux.do/posts/26642.json', {
+import { routes } from '@src/server/routes';
+
+/**
+ * 获取帖子信息
+ * @param postID - 帖子 id
+ */
+export const fetchGetPost = (postID: number) => {
+  return fetch(routes.posts.detail(postID), {
     headers: {
       accept: 'application/json, text/javascript, */*; q=0.01',
       'discourse-logged-in': 'true',
@@ -14,7 +20,22 @@ export const fetchGetPost = () => {
     method: 'GET',
     mode: 'cors',
     credentials: 'omit',
-  });
+  })
+    .then(serverPromise => {
+      return serverPromise
+        .json()
+        .then(res => {
+          return Promise.resolve(res);
+        })
+        .catch(err => {
+          console.error(err);
+          return Promise.reject(err);
+        });
+    })
+    .catch(err => {
+      console.error(err);
+      return Promise.reject(err);
+    });
 };
 
 type CreatePostBodyType = {
@@ -45,7 +66,7 @@ export const fetchCreatePost = (postBody: CreatePostBodyType, csrfToken: string)
     .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
     .join('&');
 
-  return fetch('https://linux.do/posts', {
+  return fetch(routes.posts.root, {
     headers: {
       accept: '*/*',
       'accept-language': 'zh-CN,zh;q=0.9,en;q=0.8',
