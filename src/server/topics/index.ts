@@ -34,12 +34,19 @@ export const fetchTopicDetail = (topicID: number, csrfToken: string) => {
     });
 };
 
+export const genContinuousPostsNumber = (botNum: number, topNum: number) => {
+  return Array.from({ length: topNum - botNum + 1}, (_, i) => i + botNum);
+};
+
+export const genContinuousAllPostsNumber = (topNum: number) => {
+  return genContinuousPostsNumber(1, topNum);
+};
+
 export const genFetchTopicsTimingBody = (topicID: number, postsNumber: number[]) => {
-  const newPostsNumber = postsNumber;
   // 随机时间（单位毫秒），有效数字为 0 - 60000 ms，超过的视为 60000 ms。分析见 https://linux.do/t/topic/26966?u=delph1s
   const randTime = ldRandom(60000, 61000, false);
   // 使用模板生成新的字符串列表
-  const newPostsTimingsString = newPostsNumber.map(num => `timings%5B${num}%5D=${randTime}`);
+  const newPostsTimingsString = postsNumber.map(num => `timings%5B${num}%5D=${randTime}`);
   // 使用"&"连接字符串
   const result = newPostsTimingsString.join('&');
 
