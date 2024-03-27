@@ -135,7 +135,7 @@ function PandoraDrawer({
           />
         </Box>
         <Divider />
-        <Box mb={2} display="flex" justifyContent="space-between" alignItems="center" lineHeight={1}>
+        <Box mb={2} display="flex" justifyContent="space-between" alignItems="center" gap={1} lineHeight={1}>
           <Typography variant="h6">修改邀请时限</Typography>
           <LoadingButton
             color="info"
