@@ -1,5 +1,8 @@
 import { qsOne } from '@core/utils/query-selector';
 
+/**
+ * 获取页面中的 csrf token
+ */
 export const getCsrfToken = () => {
   const csrfTokenMetaDom = qsOne('meta[name="csrf-token"]');
   if (csrfTokenMetaDom) {
@@ -14,6 +17,9 @@ type PreloadedDataType = {
   topicTrackingStates: any;
 };
 
+/**
+ * 获取页面中的预加载数据
+ */
 export const getPreloadedData = (): PreloadedDataType | null => {
   const preloadedDataDom = qsOne('#data-preloaded');
   if (preloadedDataDom) {
@@ -48,6 +54,9 @@ export const getPreloadedData = (): PreloadedDataType | null => {
   return null;
 };
 
+/**
+ * 获取预加载数据中的用户名
+ */
 export const getPreloadedUsername = (): string | null => {
   const preloadedData = getPreloadedData();
   if (preloadedData && preloadedData.currentUser) {

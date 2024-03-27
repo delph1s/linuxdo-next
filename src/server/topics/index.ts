@@ -35,7 +35,7 @@ export const fetchTopicDetail = (topicID: number, csrfToken: string) => {
 };
 
 export const genContinuousPostsNumber = (botNum: number, topNum: number) => {
-  return Array.from({ length: topNum - botNum + 1}, (_, i) => i + botNum);
+  return Array.from({ length: topNum - botNum + 1 }, (_, i) => i + botNum);
 };
 
 export const genContinuousAllPostsNumber = (topNum: number) => {
@@ -53,7 +53,19 @@ export const genFetchTopicsTimingBody = (topicID: number, postsNumber: number[])
   return `${result}&topic_time=${randTime}&topic_id=${topicID}`;
 };
 
-export const fetchTopicsTiming = (fetchBody: string, csrfToken: string) => {
+type TimingBodyType = {
+  topicID: number;
+  postsNumber: number[];
+};
+
+/**
+ * 主题阅读时间
+ * @param fetchBody
+ * @param csrfToken
+ */
+export const fetchTopicsTiming = (fetchBody: TimingBodyType, csrfToken: string) => {
+  const queryString = genFetchTopicsTimingBody(fetchBody.topicID, fetchBody.postsNumber);
+
   return fetch(routes.topics.timing, {
     headers: {
       accept: '*/*',
@@ -66,7 +78,7 @@ export const fetchTopicsTiming = (fetchBody: string, csrfToken: string) => {
       'x-requested-with': 'XMLHttpRequest',
       'x-silence-logger': 'true',
     },
-    body: fetchBody,
+    body: queryString,
     method: 'POST',
     mode: 'cors',
     credentials: 'include',

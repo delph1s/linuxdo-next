@@ -58,11 +58,11 @@ type CreatePostBodyType = {
 /**
  * 创建帖子
  * FBI warning: 这是个危险的方法
- * @param postBody - 帖子的内容
+ * @param fetchBody - 帖子的内容
  * @param csrfToken - csrf token
  */
-export const fetchCreatePost = (postBody: CreatePostBodyType, csrfToken: string) => {
-  const queryString = Object.entries(postBody)
+export const fetchCreatePost = (fetchBody: CreatePostBodyType, csrfToken: string) => {
+  const queryString = Object.entries(fetchBody)
     .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
     .join('&');
 
