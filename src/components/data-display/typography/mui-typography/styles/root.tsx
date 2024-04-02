@@ -1,4 +1,4 @@
-import { TypographyOwnerStateType } from '@components/typography/mui-typography/types';
+import { TypographyOwnerStateType } from '@components/data-display/typography/mui-typography/types';
 import { filterForwardProps } from '@core/utils/filters';
 import { CSSObject, styled } from '@mui/material/styles';
 import Typography, { TypographyProps } from '@mui/material/Typography';

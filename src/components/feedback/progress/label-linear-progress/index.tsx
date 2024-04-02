@@ -1,6 +1,6 @@
-import LinearProgressRoot from '@components/progress/label-linear-progress/styles/root';
-import { LinearProgressProps } from '@components/progress/label-linear-progress/types';
-import Typography from '@components/typography/mui-typography';
+import LinearProgressRoot from '@components/feedback/progress/label-linear-progress/styles/root';
+import { LinearProgressProps } from '@components/feedback/progress/label-linear-progress/types';
+import Typography from '@components/data-display/typography/mui-typography';
 import React from 'react';
 
 function LinearProgress({

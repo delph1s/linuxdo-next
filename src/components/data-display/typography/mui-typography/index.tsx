@@ -1,5 +1,5 @@
-import TypographyRoot from '@components/typography/mui-typography/styles/root';
-import type { TypographyProps } from '@components/typography/mui-typography/types';
+import TypographyRoot from '@components/data-display/typography/mui-typography/styles/root';
+import type { TypographyProps } from '@components/data-display/typography/mui-typography/types';
 import React from 'react';
 
 function Typography({

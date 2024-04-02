@@ -1,7 +1,7 @@
-import Button from '@components/button/mui-button';
+import Button from '@components/inputs/button/mui-button';
 import Box from '@components/layout/box/mui-box';
-import LinearProgress from '@components/progress/label-linear-progress';
-import Typography from '@components/typography/mui-typography';
+import LinearProgress from '@components/feedback/progress/label-linear-progress';
+import Typography from '@components/data-display/typography/mui-typography';
 import { getCsrfToken, getPreloadedUsername } from '@core/dom';
 import CloseIcon from '@mui/icons-material/Close';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';

@@ -40,6 +40,7 @@ export const fetchGetUserSummary = (username: string, csrfToken: string) => {
 };
 
 export type TrustLevelRequireRawData = {
+  key?: string;
   title: string;
   value: string;
   requireValue: string;
@@ -47,31 +48,37 @@ export type TrustLevelRequireRawData = {
 
 export const initRealTrustLevelInfo: TrustLevelRequireRawData[] = [
   {
+    key: 'days_visited',
     title: '访问次数',
     value: '0',
     requireValue: '0',
   },
   {
+    key: 'topics_reply_count',
     title: '回复的话题',
     value: '0',
     requireValue: '0',
   },
   {
+    key: 'topics_entered',
     title: '浏览的话题',
     value: '0',
     requireValue: '0',
   },
   {
+    key: 'topics_entered_all',
     title: '浏览的话题（所有时间）',
     value: '0',
     requireValue: '0',
   },
   {
+    key: 'posts_read_count',
     title: '已读帖子',
     value: '0',
     requireValue: '0',
   },
   {
+    key: 'posts_read_count_all',
     title: '已读帖子（所有时间）',
     value: '0',
     requireValue: '0',

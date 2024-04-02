@@ -1,6 +1,7 @@
-import Button from '@components/button/mui-button';
-import { LinearProgressProps } from '@components/progress/label-linear-progress/types';
-import Typography from '@components/typography/mui-typography';
+import Typography from '@components/data-display/typography/mui-typography';
+import LinearProgress from '@components/feedback/progress/label-linear-progress';
+import { LinearProgressProps } from '@components/feedback/progress/label-linear-progress/types';
+import Button from '@components/inputs/button/mui-button';
 import { getCsrfToken, getPreloadedUsername } from '@core/dom';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -12,8 +13,6 @@ import { UserProfile } from '@server/user/types';
 import { fetchRealTrustLevelInfo, fetchUserProfile, TrustLevelRequireRawData } from '@src/server';
 import lodashUniqueId from 'lodash/uniqueId';
 import React, { useEffect, useState } from 'react';
-
-import LinearProgress from '../../progress/label-linear-progress';
 
 type TrustLevelRequireProgressData = {
   title: string;

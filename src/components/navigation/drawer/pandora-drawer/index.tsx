@@ -1,8 +1,9 @@
-import Button from '@components/button/mui-button';
-import { PandoraButtonPosition } from '@components/button/pandora-button/types';
-import UserComparisonDialog from '@components/dialog/user-comparison-dialog';
+import Typography from '@components/data-display/typography/mui-typography';
+import TrustLevelDialog from '@components/feedback/dialog/trust-level-dialog';
+import UserComparisonDialog from '@components/feedback/dialog/user-comparison-dialog';
+import Button from '@components/inputs/button/mui-button';
+import { PandoraButtonPosition } from '@components/inputs/button/pandora-button/types';
 import Box from '@components/layout/box/mui-box';
-import Typography from '@components/typography/mui-typography';
 import { uiConfig } from '@config/ui';
 import { getCsrfToken, getPreloadedUsername } from '@core/dom';
 import { useSettingsContext } from '@core/hooks/useSettingsContext';
@@ -10,12 +11,12 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import Divider from '@mui/material/Divider';
 import { useTheme } from '@mui/material/styles';
 import Switch from '@mui/material/Switch';
+import Tooltip from '@mui/material/Tooltip';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { fetchForumAbout, fetchGetInvites, fetchUpdateInvite } from '@src/server';
 import lodashClone from 'lodash/clone';
 import React, { Dispatch, SetStateAction, useRef, useState } from 'react';
 
-import TrustLevelDialog from '../../dialog/trust-level-dialog';
 import { StyledPandoraDrawer } from './styles';
 
 type PandoraDrawerProps = {
@@ -35,6 +36,7 @@ function PandoraDrawer({
   const matches = useMediaQuery(theme.breakpoints.up('sm'));
   const forceStop = useRef<boolean>(false);
   const [isFetching, setIsFetching] = useState<boolean>(false);
+  const [showPrivate, setShowPrivate] = useState<number>(0);
 
   const drawerSize = matches ? uiConfig.pandoraDrawerMaxHeight : uiConfig.pandoraDrawerMinHeight;
   const drawerVariant = drawerPosition === 'left' || drawerPosition === 'right' ? 'permanent' : 'persistent';
@@ -137,23 +139,30 @@ function PandoraDrawer({
         <Divider />
         <Box mb={2} display="flex" justifyContent="space-between" alignItems="center" gap={1} lineHeight={1}>
           <Typography variant="h6">修改邀请时限</Typography>
-          <LoadingButton
-            color="info"
-            variant="gradient"
-            loading={isFetching}
-            onClick={() => handleModifyInvitesExpiredTime()}
-          >
-            修改
-          </LoadingButton>
-          <Button
-            color="primary"
-            disabled={!isFetching}
-            onClick={() => {
-              forceStop.current = true;
-            }}
-          >
-            停止
-          </Button>
+          <Tooltip title="太刑了，已被点名批评" placement="top" sx={{ zIndex: 10000 }}>
+            <LoadingButton
+              color="info"
+              variant="gradient"
+              // loading={isFetching}
+              loading={false}
+              // onClick={() => handleModifyInvitesExpiredTime()}
+              onClick={() => window.open('https://linux.do/t/topic/46387/7?u=delph1s', '_blank')}
+            >
+              跳转说明帖子
+            </LoadingButton>
+          </Tooltip>
+          {/* <Tooltip title="太刑了，已被点名批评" placement="top" sx={{ zIndex: 10000 }}> */}
+          {/*   <Button */}
+          {/*     color="primary" */}
+          {/*     // disabled={!isFetching}  // 响应始皇的政策 */}
+          {/*     disabled */}
+          {/*     onClick={() => { */}
+          {/*       forceStop.current = true; */}
+          {/*     }} */}
+          {/*   > */}
+          {/*     停止 */}
+          {/*   </Button> */}
+          {/* </Tooltip> */}
         </Box>
         <Divider />
         <Box mb={2} display="flex" justifyContent="space-between" alignItems="center" lineHeight={1}>
@@ -188,6 +197,39 @@ function PandoraDrawer({
             开P
           </LoadingButton>
           <UserComparisonDialog open={openPK} toggleOpen={handleToggleUserComparisonDialog} />
+        </Box>
+        <Divider />
+        <Box mb={2} display="flex" justifyContent="space-between" alignItems="center" lineHeight={1}>
+          <Typography
+            variant="h6"
+            sx={{
+              ...(showPrivate < 10 && {
+                '&, &:hover, &:focus, &:focus:not(:hover), &:active': {
+                  color: 'rgba(0, 0, 0, 0)',
+                  background: 'transparent',
+                  boxShadow: 'none',
+                },
+              }),
+            }}
+          >
+            自主阅读
+          </Typography>
+          <Button
+            color="info"
+            variant="gradient"
+            onClick={() => setShowPrivate(prevState => prevState + 1)}
+            sx={{
+              ...(showPrivate < 10 && {
+                '&, &:hover, &:focus, &:focus:not(:hover), &:active': {
+                  color: 'rgba(0, 0, 0, 0)',
+                  background: 'transparent',
+                  boxShadow: 'none',
+                },
+              }),
+            }}
+          >
+            随机阅读
+          </Button>
         </Box>
       </Box>
     </StyledPandoraDrawer>

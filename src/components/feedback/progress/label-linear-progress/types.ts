@@ -1,5 +1,5 @@
 import { ThemeColorSchema } from '@assets/theme/vars/types';
-import { TypographyProps } from '@components/typography/mui-typography/types';
+import { TypographyProps } from '@components/data-display/typography/mui-typography/types';
 import { LinearProgressProps as MuiLinearProgressProps } from '@mui/material/LinearProgress';
 import { Merge } from 'type-fest';
 

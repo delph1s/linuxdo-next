@@ -1,4 +1,4 @@
-import { PandoraButtonPosition } from '@components/button/pandora-button/types';
+import { PandoraButtonPosition } from '@components/inputs/button/pandora-button/types';
 import { uiConfig } from '@config/ui';
 import { filterForwardProps } from '@core/utils/filters';
 import Drawer, { drawerClasses, DrawerProps } from '@mui/material/Drawer';

@@ -1,4 +1,4 @@
-import { LinearProgressOwnerStateType } from '@components/progress/label-linear-progress/types';
+import { LinearProgressOwnerStateType } from '@components/feedback/progress/label-linear-progress/types';
 import { filterForwardProps } from '@core/utils/filters';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import { styled } from '@mui/material/styles';

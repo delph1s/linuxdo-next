@@ -1,4 +1,4 @@
-import { PandoraButtonPosition } from '@components/button/pandora-button/types';
+import { PandoraButtonPosition } from '@components/inputs/button/pandora-button/types';
 import { ButtonProps } from '@mui/material/Button';
 import React, { useRef, useState } from 'react';
 

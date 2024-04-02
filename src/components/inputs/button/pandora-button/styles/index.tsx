@@ -1,5 +1,5 @@
-import Button from '@components/button/mui-button';
-import { PandoraButtonPosition } from '@components/button/pandora-button/types';
+import Button from '@components/inputs/button/mui-button';
+import { PandoraButtonPosition } from '@components/inputs/button/pandora-button/types';
 import { uiConfig } from '@config/ui';
 import { filterForwardProps } from '@core/utils/filters';
 import { CSSInterpolation, styled } from '@mui/material/styles';
