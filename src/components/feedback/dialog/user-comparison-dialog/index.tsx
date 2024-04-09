@@ -1,23 +1,27 @@
+import Typography from '@components/data-display/typography/mui-typography';
+import LinearProgress from '@components/feedback/progress/label-linear-progress';
 import Button from '@components/inputs/button/mui-button';
 import Box from '@components/layout/box/mui-box';
-import LinearProgress from '@components/feedback/progress/label-linear-progress';
-import Typography from '@components/data-display/typography/mui-typography';
-import { getCsrfToken, getPreloadedUsername } from '@core/dom';
+import { getCsrfToken, getPreloadedUserProfile } from '@core/dom';
 import CloseIcon from '@mui/icons-material/Close';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
+import Avatar from '@mui/material/Avatar';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
 import Toolbar from '@mui/material/Toolbar';
-import { fetchGetUserSummary } from '@src/server';
+import { fetchGetUserSummary, fetchSearchUsers } from '@src/server';
 import lodashSome from 'lodash/some';
 import React, { useEffect, useState } from 'react';
 
-type SuggestionsType = {
-  label: string;
+type OptionsType = {
+  id: number;
   username: string;
+  name: string;
+  avatarTemplate: string;
 };
 
 type ComparisonData = {
@@ -36,40 +40,101 @@ type UserComparisonDialogProps = {
   toggleOpen: (state?: boolean) => void;
 };
 
-const filter = createFilterOptions<SuggestionsType>();
+const filter = createFilterOptions<OptionsType>();
 
 function UserComparisonDialog({ open, toggleOpen }: UserComparisonDialogProps) {
-  const [userSuggestions, setUserSuggestions] = useState<SuggestionsType[]>([
-    {
-      label: '我秦始皇',
-      username: 'neo',
-    },
-    {
-      label: '慕思斐',
-      username: 'musifei',
-    },
-  ]);
-  const [leftUser, setLeftUser] = useState<SuggestionsType | null>(null);
-  const [rightUser, setRightUser] = useState<SuggestionsType | null>(null);
+  const [userSuggestions, setUserSuggestions] = useState<OptionsType[]>([]);
+  const [userOptions, setUserOptions] = useState<OptionsType[]>([]);
+  const [leftUser, setLeftUser] = useState<OptionsType | null>(null);
+  const [leftInputUser, setLeftInputUser] = useState<string>('');
+  const [rightUser, setRightUser] = useState<OptionsType | null>(null);
+  const [rightInputUser, setRightInputUser] = useState<string>('');
   const [comparisonData, setComparisonData] = useState<ComparisonData[]>([]);
 
   useEffect(() => {
-    const username = getPreloadedUsername();
-    if (username && !lodashSome(userSuggestions, ['username', username])) {
-      setUserSuggestions(prevState => [
+    const userProfile = getPreloadedUserProfile();
+    if (userProfile.username && !lodashSome(userSuggestions, ['username', userProfile.username])) {
+      setUserSuggestions([
         {
-          label: username,
-          username,
+          id: userProfile.id,
+          username: userProfile.username,
+          name: userProfile.name || userProfile.username,
+          avatarTemplate: userProfile.avatar_template,
         },
-        ...userSuggestions,
       ]);
       setLeftUser({
-        label: username,
-        username,
+        id: userProfile.id,
+        username: userProfile.username,
+        name: userProfile.name || userProfile.username,
+        avatarTemplate: userProfile.avatar_template,
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    let active = true;
+
+    const csrfToken = getCsrfToken();
+    if (csrfToken) {
+      if (leftInputUser) {
+        fetchSearchUsers({ term: leftInputUser }, csrfToken)
+          .then(res => {
+            if (active) {
+              const newOptions = res.users.map(user => {
+                return {
+                  id: user.id,
+                  username: user.username,
+                  name: user.name || user.username,
+                  avatarTemplate: user.avatar_template,
+                };
+              });
+              setUserOptions([...newOptions]);
+            }
+          })
+          .catch(err => console.error(err));
+      } else {
+        setUserOptions([...userSuggestions]);
+      }
+    }
+
+    return () => {
+      active = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [leftInputUser]);
+
+  useEffect(() => {
+    let active = true;
+
+    const csrfToken = getCsrfToken();
+    if (csrfToken) {
+      if (rightInputUser) {
+        fetchSearchUsers({ term: rightInputUser }, csrfToken)
+          .then(res => {
+            if (active) {
+              const newOptions = res.users.map(user => {
+                return {
+                  id: user.id,
+                  username: user.username,
+                  name: user.name || user.username,
+                  avatarTemplate: user.avatar_template,
+                };
+              });
+              setUserOptions([...newOptions]);
+            }
+          })
+          .catch(err => console.error(err));
+      } else {
+        setUserOptions([...userSuggestions]);
+      }
+    }
+
+    return () => {
+      active = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rightInputUser]);
 
   const trimUserSummaryData = (
     dataLeftUser: { user_summary: { [K: string]: number }; [K: string]: any },
@@ -81,14 +146,29 @@ function UserComparisonDialog({ open, toggleOpen }: UserComparisonDialogProps) {
     const newDataList = [
       { id: 'days_visited', title: '访问天数', leftValue: leftUS.days_visited, rightValue: rightUS.days_visited },
       { id: 'time_read', title: '阅读时间', leftValue: leftUS.time_read, rightValue: rightUS.time_read },
-      { id: 'recent_time_read', title: '阅读时间（最近）', leftValue: leftUS.recent_time_read, rightValue: rightUS.recent_time_read },
-      { id: 'topics_entered', title: '浏览的话题', leftValue: leftUS.topics_entered, rightValue: rightUS.topics_entered },
-      { id: 'posts_read_count', title: '已读帖子', leftValue: leftUS.posts_read_count, rightValue: rightUS.posts_read_count },
+      {
+        id: 'recent_time_read',
+        title: '阅读时间（最近）',
+        leftValue: leftUS.recent_time_read,
+        rightValue: rightUS.recent_time_read,
+      },
+      {
+        id: 'topics_entered',
+        title: '浏览的话题',
+        leftValue: leftUS.topics_entered,
+        rightValue: rightUS.topics_entered,
+      },
+      {
+        id: 'posts_read_count',
+        title: '已读帖子',
+        leftValue: leftUS.posts_read_count,
+        rightValue: rightUS.posts_read_count,
+      },
       { id: 'likes_given', title: '已送出赞', leftValue: leftUS.likes_given, rightValue: rightUS.likes_given },
       { id: 'likes_received', title: '已收到赞', leftValue: leftUS.likes_received, rightValue: rightUS.likes_received },
       { id: 'topic_count', title: '创建的话题', leftValue: leftUS.topic_count, rightValue: rightUS.topic_count },
       { id: 'post_count', title: '创建的帖子', leftValue: leftUS.post_count, rightValue: rightUS.post_count },
-      { id: 'solved_count', title: '解决数', leftValue: leftUS.solved_count, rightValue: rightUS.solved_count },
+      { id: 'solved_count', title: '解决问题数', leftValue: leftUS.solved_count, rightValue: rightUS.solved_count },
     ];
 
     const resultData: ComparisonData[] = newDataList.map(item => {
@@ -131,19 +211,23 @@ function UserComparisonDialog({ open, toggleOpen }: UserComparisonDialogProps) {
         if (leftUserData && !lodashSome(userSuggestions, ['username', leftUser.username])) {
           setUserSuggestions(prevState => [
             {
-              label: leftUser.username,
+              id: leftUser.id,
               username: leftUser.username,
+              name: leftUser.name || leftUser.username,
+              avatarTemplate: leftUser.avatarTemplate,
             },
-            ...userSuggestions,
+            ...prevState,
           ]);
         }
         if (rightUserData && !lodashSome(userSuggestions, ['username', rightUser.username])) {
           setUserSuggestions(prevState => [
             {
-              label: rightUser.username,
+              id: rightUser.id,
               username: rightUser.username,
+              name: rightUser.name || rightUser.username,
+              avatarTemplate: rightUser.avatarTemplate,
             },
-            ...userSuggestions,
+            ...prevState,
           ]);
         }
         const trimedUserSummaryData = trimUserSummaryData(leftUserData, rightUserData);
@@ -169,139 +253,127 @@ function UserComparisonDialog({ open, toggleOpen }: UserComparisonDialogProps) {
         <Box sx={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', p: 3 }}>
           <Box sx={{ width: '280px', mr: 1 }}>
             <Autocomplete
-              value={leftUser}
-              onChange={(event, newValue) => {
-                if (typeof newValue === 'string') {
-                  setLeftUser({
-                    label: newValue,
-                    username: newValue,
-                  });
-                } else if (newValue && newValue.username) {
-                  setLeftUser({
-                    label: newValue.username,
-                    username: newValue.username,
-                  });
-                } else {
-                  setLeftUser(newValue);
-                }
-              }}
-              filterOptions={(options, params) => {
-                const filtered = filter(options, params);
-
-                const { inputValue } = params;
-                const isExisting = options.some(option => inputValue === option.username);
-                if (inputValue !== '' && !isExisting) {
-                  filtered.push({
-                    label: `添加"${inputValue}"`,
-                    username: inputValue,
-                  });
-                }
-
-                return filtered;
-              }}
-              selectOnFocus
-              clearOnBlur
-              handleHomeEndKeys
-              options={userSuggestions}
+              id="pk-user-left"
               getOptionLabel={option => {
                 if (typeof option === 'string') {
                   return option;
                 }
-                if (option.label) {
-                  return option.label;
-                }
-                return option.username;
+                return option.name;
               }}
-              renderOption={(props, option) => <li {...props}>{option.label}</li>}
-              freeSolo
-              renderInput={params => <TextField {...params} label="挑战者" />}
+              filterOptions={options => options}
+              options={userOptions.length > 0 ? userOptions : userSuggestions}
+              // includeInputInList
+              value={leftUser}
+              noOptionsText="未选择用户"
+              onChange={(event, newValue) => {
+                setLeftUser(newValue);
+              }}
+              onInputChange={(event, value) => setLeftInputUser(value)}
+              renderInput={params => <TextField {...params} label="守擂者" />}
+              renderOption={(props, option) => (
+                <li {...props}>
+                  <Grid container alignItems="center">
+                    <Grid item sx={{ display: 'flex', width: 24 }}>
+                      <Avatar
+                        alt={option.name}
+                        src={option.avatarTemplate.replace('{size}', '96')}
+                        sx={{ width: 24, height: 24 }}
+                      />
+                    </Grid>
+                    <Grid item sx={{ ml: '4px', width: 'calc(100% - 28px)', wordWrap: 'break-word' }}>
+                      <Typography variant="subtitle1" color="dark" fontSize={12}>
+                        {option.name}
+                      </Typography>
+                      <Typography variant="subtitle2" color="secondary" fontSize={10}>
+                        {option.username}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </li>
+              )}
             />
           </Box>
           <Box sx={{ width: '140px', textAlign: 'center' }}>
-            <Button onClick={() => handlePK()}>
-              VS
-            </Button>
+            <Button onClick={() => handlePK()}>VS</Button>
           </Box>
           <Box sx={{ width: '280px', ml: 1 }}>
             <Autocomplete
-              value={rightUser}
-              onChange={(event, newValue) => {
-                if (typeof newValue === 'string') {
-                  setRightUser({
-                    label: newValue,
-                    username: newValue,
-                  });
-                } else if (newValue && newValue.username) {
-                  setRightUser({
-                    label: newValue.username,
-                    username: newValue.username,
-                  });
-                } else {
-                  setRightUser(newValue);
-                }
-              }}
-              filterOptions={(options, params) => {
-                const filtered = filter(options, params);
-
-                const { inputValue } = params;
-                const isExisting = options.some(option => inputValue === option.username);
-                if (inputValue !== '' && !isExisting) {
-                  filtered.push({
-                    label: `添加"${inputValue}"`,
-                    username: inputValue,
-                  });
-                }
-
-                return filtered;
-              }}
-              selectOnFocus
-              clearOnBlur
-              handleHomeEndKeys
-              options={userSuggestions}
+              id="pk-user-right"
               getOptionLabel={option => {
                 if (typeof option === 'string') {
                   return option;
                 }
-                if (option.label) {
-                  return option.label;
-                }
-                return option.username;
+                return option.name;
               }}
-              renderOption={(props, option) => <li {...props}>{option.label}</li>}
-              freeSolo
+              filterOptions={options => options}
+              options={userOptions.length > 0 ? userOptions : userSuggestions}
+              // includeInputInList
+              value={rightUser}
+              noOptionsText="未选择用户"
+              onChange={(event, newValue) => {
+                setRightUser(newValue);
+              }}
+              onInputChange={(event, value) => setRightInputUser(value)}
               renderInput={params => <TextField {...params} label="守擂者" />}
+              renderOption={(props, option) => (
+                <li {...props}>
+                  <Grid container alignItems="center">
+                    <Grid item sx={{ display: 'flex', width: 24 }}>
+                      <Avatar
+                        alt={option.name}
+                        src={option.avatarTemplate.replace('{size}', '96')}
+                        sx={{ width: 24, height: 24 }}
+                      />
+                    </Grid>
+                    <Grid item sx={{ ml: '4px', width: 'calc(100% - 28px)', wordWrap: 'break-word' }}>
+                      <Typography variant="subtitle1" color="dark" fontSize={12}>
+                        {option.name}
+                      </Typography>
+                      <Typography variant="subtitle2" color="secondary" fontSize={10}>
+                        {option.username}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </li>
+              )}
             />
           </Box>
         </Box>
-        {comparisonData.length > 0 && comparisonData.map(item => {
-          return (
-            <Box key={item.id} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', px: 3, pb: 3 }}>
-              <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '40%', mr: 1 }}>
-                <Box sx={{ width: '20%', mr: 1 }}>
-                  <Typography variant="button" fontWeight="medium" color="text">
-                    {`${item.leftValue}`}
-                  </Typography>
+        {comparisonData.length > 0 &&
+          comparisonData.map(item => {
+            return (
+              <Box key={item.id} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', px: 3, pb: 3 }}>
+                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '40%', mr: 1 }}>
+                  <Box sx={{ width: '20%', mr: 1 }}>
+                    <Typography variant="button" fontWeight="medium" color="text">
+                      {`${item.leftValue}`}
+                    </Typography>
+                  </Box>
+                  <Box sx={{ width: '80%' }}>
+                    <LinearProgress
+                      color={item.leftColor}
+                      variant="gradient"
+                      value={item.leftPercent}
+                      sx={{ transform: 'scaleX(-1)' }}
+                    />
+                  </Box>
                 </Box>
-                <Box sx={{ width: '80%' }}>
-                  <LinearProgress color={item.leftColor} variant="gradient" value={item.leftPercent} sx={{ transform: 'scaleX(-1)' }} />
+                <Typography variant="h6" sx={{ width: '20%', textAlign: 'center' }}>
+                  {`${item.title}`}
+                </Typography>
+                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '40%', ml: 1 }}>
+                  <Box sx={{ width: '80%' }}>
+                    <LinearProgress color={item.rightColor} variant="gradient" value={item.rightPercent} />
+                  </Box>
+                  <Box sx={{ width: '20%', ml: 1 }}>
+                    <Typography variant="button" fontWeight="medium" color="text">
+                      {`${item.rightValue}`}
+                    </Typography>
+                  </Box>
                 </Box>
               </Box>
-              <Typography variant="h6" sx={{ width: '20%', textAlign: 'center' }}>
-                {`${item.title}`}
-              </Typography>
-              <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '40%', ml: 1 }}>
-                <Box sx={{ width: '80%' }}>
-                  <LinearProgress color={item.rightColor} variant="gradient" value={item.rightPercent} />
-                </Box>
-                <Box sx={{ width: '20%', ml: 1 }}>
-                  <Typography variant="button" fontWeight="medium" color="text">
-                    {`${item.rightValue}`}
-                  </Typography>
-                </Box>
-              </Box>
-            </Box>
-          );
-        })}
+            );
+          })}
       </DialogContent>
     </Dialog>
   );

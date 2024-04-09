@@ -58,17 +58,28 @@ const summaryAttributes = [
 ];
 
 const normalTrustLevelRequireData = {
-  0: { topics_entered: 5, posts_read_count: 30, time_read: 600 },
-  1: {
-    days_visited: 15,
-    likes_given: 1,
-    likes_received: 1,
-    post_count: 3,
-    topics_entered: 20,
-    posts_read_count: 100,
-    time_read: 3600,
-  },
-  2: { days_visited: 50, likes_given: 30, likes_received: 20, post_count: 10 },
+  0: [
+    { key: 'topics_entered', requireValue: 5, calc: '>=' },
+    { key: 'posts_read_count', requireValue: 30, calc: '>=' },
+    { key: 'time_read', requireValue: 600, calc: '>=' },
+  ],
+  1: [
+    { key: 'days_visited', requireValue: 15, calc: '>=' },
+    { key: 'likes_given', requireValue: 1, calc: '>=' },
+    { key: 'likes_received', requireValue: 1, calc: '>=' },
+    { key: 'post_count', requireValue: 3, calc: '>=' },
+    { key: 'topics_entered', requireValue: 20, calc: '>=' },
+    { key: 'posts_read_count', requireValue: 100, calc: '>=' },
+    { key: 'time_read', requireValue: 3600, calc: '>=' },
+  ],
+  2: [
+    { key: 'days_visited', requireValue: 50, calc: '>=' },
+    { key: 'post_count', requireValue: 10, calc: '>=' },
+    { key: 'topics_entered', requireValue: 500, calc: '>=' },
+    { key: 'posts_read_count', requireValue: 20000, calc: '>=' },
+    { key: 'likes_given', requireValue: 30, calc: '>=' },
+    { key: 'likes_received', requireValue: 20, calc: '>=' },
+  ]
 };
 
 function TrustLevelDialog({ open = false, toggleOpen }: TrustLevelDialogProps) {

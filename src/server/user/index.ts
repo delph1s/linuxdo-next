@@ -1,5 +1,9 @@
+import { objectToQuery } from '@core/utils/string-utils';
 import { routes } from '@server/routes';
 import { UserProfile } from '@server/user/types';
+import lodashKeys from 'lodash/keys';
+import lodashMerge from 'lodash/merge';
+import lodashPickBy from 'lodash/pickBy';
 import { GM_xmlhttpRequest } from 'vite-plugin-monkey/dist/client';
 
 /**
@@ -246,7 +250,7 @@ export const fetchRealTrustLevelInfo = () => {
       // user,
       // password,
       // onabort,
-      onerror: (err) => {
+      onerror: err => {
         console.log('请求异常');
         resolve(initRealTrustLevelInfo);
       },
@@ -254,7 +258,7 @@ export const fetchRealTrustLevelInfo = () => {
       // onprogress,
       // onreadystatechange,
       // ontimeout,
-      onload: (serverResponse) => {
+      onload: serverResponse => {
         try {
           resolve(extractTrustLevelInfo(serverResponse.responseText));
         } catch (err) {
@@ -277,6 +281,68 @@ export const fetchUserProfile = (username: string, csrfToken: string): Promise<U
       'discourse-logged-in': 'true',
       'discourse-present': 'true',
       'discourse-track-view': 'true',
+      'x-csrf-token': csrfToken,
+      'x-requested-with': 'XMLHttpRequest',
+    },
+    body: null,
+    method: 'GET',
+    mode: 'cors',
+    credentials: 'include',
+  })
+    .then(serverPromise => {
+      return serverPromise
+        .json()
+        .then(res => {
+          return Promise.resolve(res);
+        })
+        .catch(err => {
+          console.error(err);
+          return Promise.reject(err);
+        });
+    })
+    .catch(err => {
+      console.error(err);
+      return Promise.reject(err);
+    });
+};
+
+export type UserStatusType = {
+  description: string;
+  emoji: string;
+  ends_at: null;
+  message_bus_last_id: number;
+};
+export type SearchUsersQueryType = { term: string; topic_id?: number; category_id?: number; limit?: number };
+export type SearchUserResType = {
+  id: number;
+  username: string;
+  name: string;
+  avatar_template: string;
+  status?: UserStatusType;
+}
+
+/**
+ * 查找用户
+ * @param query - 查询参数
+ * @param csrfToken - csrf token
+ */
+export const fetchSearchUsers = (query: SearchUsersQueryType, csrfToken: string): Promise<{users: SearchUserResType[]}> => {
+  const newQuery: SearchUsersQueryType = lodashMerge(
+    {
+      term: 'neo',
+      topic_id: undefined,
+      category_id: undefined,
+      limit: 10,
+    },
+    query,
+  );
+  const urlQuery = objectToQuery(newQuery);
+
+  return fetch(`${routes.user.searchUsers}?${urlQuery}`, {
+    headers: {
+      accept: 'application/json, text/javascript, */*; q=0.01',
+      'discourse-logged-in': 'true',
+      'discourse-present': 'true',
       'x-csrf-token': csrfToken,
       'x-requested-with': 'XMLHttpRequest',
     },

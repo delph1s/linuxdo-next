@@ -12,6 +12,7 @@ export const routes = {
   about: `${appConfig.domain}/about.json`,
   leaderBoard: (period: PeriodType) => `${appConfig.domain}/leaderboard/1?period=${period}`,
   user: {
+    searchUsers: `${baseRoutes.user}/search/users`, // 用户查询
     userProfile: (username: string) => `${baseRoutes.user}/${username}.json`, // 用户数据
     summary: (username: string) => `${baseRoutes.user}/${username}/summary.json`, // 用户总结
     trustLevelInfo: 'https://connect.linux.do/', // 官方信任等级查询页面
