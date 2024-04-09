@@ -213,62 +213,6 @@ function PandoraDrawer({
         </Box>
         <Divider />
         <Box mb={2} display="flex" justifyContent="space-between" alignItems="center" lineHeight={1}>
-          <Typography variant="h6">上传图片</Typography>
-          <Button color="info" variant="gradient" component="label" role={undefined} tabIndex={-1}>
-            上传
-            <VisuallyHiddenInput
-              type="file"
-              onChange={e => {
-                const uploadFile = e.target.files && e.target.files[0];
-                if (uploadFile) {
-                  const uploadFileChecksum = getFileHash(uploadFile);
-                  console.log(uploadFileChecksum);
-
-                  const csrfToken = getCsrfToken();
-                  if (csrfToken) {
-                    console.log(csrfToken);
-                    const formData = new FormData();
-                    formData.append('upload_type', 'composer');
-                    formData.append('relativePath', 'null');
-                    formData.append('name', uploadFile.name);
-                    formData.append('type', 'image');
-                    formData.append('sha1_checksum', uploadFileChecksum);
-                    formData.append('file', uploadFile, uploadFile.name);
-
-                    console.log(formData);
-                    fetch('https://linux.do/uploads.json?client_id=bddb80db355c49e1b0a68a47fbabf1a9', {
-                      method: 'POST',
-                      body: formData,
-                      credentials: 'include',
-                      headers: {
-                        accept: '*/*',
-                        'accept-language': 'zh-CN,zh;q=0.9,en;q=0.8',
-                        // 移除"content-type"，让浏览器自动设置
-                        'sec-fetch-dest': 'empty',
-                        'sec-fetch-mode': 'cors',
-                        'sec-fetch-site': 'same-origin',
-                        'x-csrf-token': csrfToken, // 确保替换为有效的CSRF令牌
-                      },
-                    })
-                      .then(serverPromise => {
-                        return serverPromise.json();
-                      })
-                      .then(res => {
-                        console.log(res);
-                        return Promise.resolve(res);
-                      })
-                      .catch(err => {
-                        console.error('上传失败：', err);
-                        return Promise.reject(err);
-                      });
-                  }
-                }
-              }}
-            />
-          </Button>
-        </Box>
-        <Divider />
-        <Box mb={2} display="flex" justifyContent="space-between" alignItems="center" lineHeight={1}>
           <Typography
             variant="h6"
             sx={{
