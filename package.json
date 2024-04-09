@@ -1,6 +1,6 @@
 {
   "name": "linuxdo-next",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "private": false,
   "type": "module",
   "scripts": {
@@ -19,6 +19,7 @@
     "@mui/lab": "5.0.0-alpha.168",
     "@mui/material": "5.15.12",
     "chroma-js": "2.4.2",
+    "crypto-js": "^4.2.0",
     "dayjs": "1.11.10",
     "js-cookie": "3.0.5",
     "lodash": "4.17.21",
@@ -26,6 +27,7 @@
   },
   "devDependencies": {
     "@types/chroma-js": "2.4.4",
+    "@types/crypto-js": "^4.2.2",
     "@types/js-cookie": "^3.0.6",
     "@types/lodash": "4.14.202",
     "@types/node": "20.11.25",
